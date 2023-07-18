@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="BellaMusica (Dev)" type="JetRunConfigurationType">
+    <envs>
+      <env name="ENVIRONMENT" value="dev" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="MainKt" />
+    <module name="finalProject.main" />
+    <shortenClasspath name="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

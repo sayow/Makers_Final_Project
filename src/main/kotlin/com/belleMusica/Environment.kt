@@ -1,3 +1,5 @@
+package com.belleMusica
+
 object Environment {
     private val env = if (System.getenv("ENVIRONMENT") == "dev") "dev" else "test"
 
