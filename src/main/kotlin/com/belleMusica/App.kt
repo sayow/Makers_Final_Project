@@ -1,10 +1,13 @@
 import com.belleMusica.Environment
 import com.belleMusica.handlers.*
+
 import com.belleMusica.schemas.Users
 import org.http4k.core.*
 import org.http4k.core.cookie.cookie
 import org.http4k.filter.ServerFilters
 import org.http4k.lens.*
+
+
 import org.http4k.routing.bind
 import org.http4k.routing.routes
 import org.http4k.template.HandlebarsTemplates
@@ -74,4 +77,7 @@ val app: HttpHandler = routes(
         "/" bind Method.POST to ServerFilters.CatchLensFailure(::loginFailResponse).then(createSessionHandler()),
         "/clear" bind Method.GET to destroySessionHandler()
     ),
+   "/albums" bind Method.GET to { request : Request ->
+        getAlbumPage(request)
+    }
 )

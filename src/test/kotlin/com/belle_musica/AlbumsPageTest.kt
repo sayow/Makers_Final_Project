@@ -6,26 +6,22 @@ import org.http4k.client.OkHttp
 import org.http4k.core.*
 import org.http4k.hamkrest.hasBody
 import org.http4k.hamkrest.hasStatus
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.ktorm.dsl.deleteAll
-import org.ktorm.entity.add
-import org.ktorm.entity.sequenceOf
 
-class HomePageTest {
+class AlbumsPageTest {
 
     @Test
     fun `Get the home page`() {
         val client = OkHttp()
 
         val response: Response = client(
-            Request(Method.GET, "http://localhost:9999/")
+            Request(Method.GET, "http://localhost:9999/albums")
         )
 
         assertThat(response, hasStatus(Status.OK))
         assertThat(
             response,
-            hasBody(containsSubstring("Hello Ahhhh"))
+            hasBody(containsSubstring("Albums"))
         )
     }
 }

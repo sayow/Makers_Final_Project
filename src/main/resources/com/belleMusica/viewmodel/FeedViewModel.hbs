@@ -1,5 +1,13 @@
 {{#> layout}}
     {{#*inline "content"}}
-    <h1>Hello</h1>
+<div>
+<h1>Albums</h1>
+{{#each albumList}}
+    <p>{{artistName}}</p>
+    <p>{{albumName}}</p>
+    <image src="{{imageUrl}}"></image>
+{{/each}}
+</div>
+</body>
     {{/inline}}
 {{/layout}}

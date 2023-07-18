@@ -1,4 +1,5 @@
 import com.belleMusica.Environment
+
 import com.belleMusica.handlers.getHomePage
 import io.github.reactivecircus.cache4k.Cache
 import org.http4k.core.*
@@ -13,8 +14,8 @@ val templateRenderer = HandlebarsTemplates().HotReload("src/main/resources")
 val database = Database.connect("jdbc:postgresql://localhost:5432/${Environment.databaseName()}")
 val sessionCache = Cache.Builder().build<String, Int>()
 
-fun main() {
 
+fun main() {
     val port = Environment.port()
     val server = app.asServer(Undertow(port)).start()
     println(database.name)
