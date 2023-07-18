@@ -1,7 +1,10 @@
 package com.belleMusica.handlers
 
 import com.belleMusica.entities.Album
+import com.belleMusica.entities.Like
+import com.belleMusica.schemas.Likes
 import com.belleMusica.viewmodel.FeedViewModel
+import database
 import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.core.Status
@@ -9,6 +12,8 @@ import templateRenderer
 import okhttp3.OkHttpClient
 import okhttp3.Request as APIRequest
 import org.json.JSONObject
+import org.ktorm.entity.add
+import org.ktorm.entity.sequenceOf
 
 val albumList = mutableListOf<Album>()
 
@@ -44,4 +49,16 @@ fun createAlbum(dataObject: JSONObject): Album {
     val coverArtArray = dataObject.getJSONObject("coverArt").getJSONArray("sources")
     val imageUrl = coverArtArray.getJSONObject(0).getString("url")
     return Album(albumId, artistName, albumName, imageUrl)
+}
+
+fun likeAlbum(request: Request, likedAlbumId: String): Response {
+    val newLike = Like {
+     // temporarily hardcoded while log in is being developed
+        userId = 2
+        albumId = likedAlbumId
+    }
+    database.sequenceOf(Likes).add(newLike)
+    return Response(Status.SEE_OTHER)
+        .header("Location", "/albums")
+        .body("")
 }

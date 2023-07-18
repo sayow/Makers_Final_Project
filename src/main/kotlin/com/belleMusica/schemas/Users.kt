@@ -1,4 +1,4 @@
-package com.acebook.schemas
+package com.belleMusica.schemas
 
 import com.belleMusica.entities.User
 import org.ktorm.schema.Table
