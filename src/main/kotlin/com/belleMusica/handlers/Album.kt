@@ -7,17 +7,15 @@ import org.http4k.core.Response
 import org.http4k.core.Status
 import templateRenderer
 import okhttp3.OkHttpClient
-import okhttp3.OkHttpClient.Builder
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Request as Requ
+import okhttp3.Request as APIRequest
 import org.json.JSONObject
 
 val albumList = mutableListOf<Album>()
 
-fun getHomePage(request: Request): Response {
+fun getAlbumPage(request: Request): Response {
     val client = OkHttpClient()
     val searchQuery = ""
-    val request = Requ.Builder()
+    val request = APIRequest.Builder()
         .url("https://spotify23.p.rapidapi.com/search/?q=%{$searchQuery}%3E&type=multi&offset=0&limit=100&numberOfTopResults=20")
         .get()
         .addHeader("X-RapidAPI-Key", "85abc57478msh62edece0b781437p1cefecjsnf08b903629a0")
