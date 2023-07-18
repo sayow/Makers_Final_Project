@@ -8,10 +8,11 @@ import org.http4k.routing.routes
 import org.http4k.server.Undertow
 import org.http4k.server.asServer
 import org.http4k.template.HandlebarsTemplates
+import org.ktorm.database.Database
 
 
 val templateRenderer = HandlebarsTemplates().HotReload("src/main/resources")
-
+val database = Database.connect("jdbc:postgresql://localhost:5432/${Environment.databaseName()}")
 
 val app: HttpHandler = routes(
     "/" bind Method.GET to {request :Request ->
@@ -21,8 +22,7 @@ val app: HttpHandler = routes(
 )
 fun main() {
 
-//    val port = Environment.port()
-    val server = app.asServer(Undertow(9000)).start()
-
+    val port = Environment.port()
+    val server = app.asServer(Undertow(port)).start()
     println("Server started on " + server.port())
 }
