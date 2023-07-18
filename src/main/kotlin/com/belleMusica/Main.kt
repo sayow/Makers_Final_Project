@@ -8,7 +8,8 @@ import org.http4k.server.asServer
 import org.http4k.template.HandlebarsTemplates
 import org.ktorm.database.Database
 
-
+val templateRenderer = HandlebarsTemplates().HotReload("src/main/resources")
+val database = Database.connect("jdbc:postgresql://localhost:5432/${Environment.databaseName()}")
 
 fun main() {
 
