@@ -86,5 +86,5 @@ private fun injectSessionCookie(response: Response, user: User): Response {
     val sessionId = UUID.randomUUID().toString()
     sessionCache.put(sessionId, user.id)
 
-    return response.cookie(Cookie("acebook_session_id", sessionId))
+    return response.cookie(Cookie("belle_musica_session_id", sessionId))
 }
