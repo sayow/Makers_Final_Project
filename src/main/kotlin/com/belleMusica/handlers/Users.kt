@@ -23,7 +23,7 @@ import java.util.*
 
 fun newUserHandler(): HttpHandler = {
     val renderer = HandlebarsTemplates().HotReload("src/main/resources")
-    val viewModel = SignUpViewModel("", "", "")
+    val viewModel = SignUpViewModel("", "", "","")
 
     Response(Status.OK).body(renderer(viewModel))
 }

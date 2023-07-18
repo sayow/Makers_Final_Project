@@ -18,6 +18,12 @@ val requiredEmailField = FormField.nonEmptyString().required("email")
 val requiredPasswordField = FormField.nonEmptyString().required("password")
 val requiredUsernameField = FormField.nonEmptyString().required("username")
 
+val requiredLoginCredentialsLens = Body.webForm(
+    Validator.Strict,
+    requiredEmailField,
+    requiredPasswordField
+).toLens()
+
 val requiredSignupFormLens = Body.webForm(
     Validator.Strict,
     requiredEmailField,
@@ -36,7 +42,7 @@ fun checkAuthenticated(contexts: RequestContexts) = Filter { next ->
 
 fun authenticateRequestFromSession(contexts: RequestContexts) = Filter { next ->
     {
-        val cookie = it.cookie("acebook_session_id")
+        val cookie = it.cookie("belle_musica_session_id")
         val sessionId = cookie?.value
 
         if (sessionId != null) {

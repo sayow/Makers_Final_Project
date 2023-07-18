@@ -4,6 +4,7 @@ import com.belleMusica.*
 import com.belleMusica.entities.User
 import com.belleMusica.schemas.Users
 import com.belleMusica.viewmodel.LoginViewModel
+import database
 import org.http4k.core.*
 import org.http4k.core.cookie.Cookie
 import org.http4k.core.cookie.cookie
@@ -14,6 +15,11 @@ import org.ktorm.entity.filter
 import org.ktorm.entity.first
 import org.ktorm.entity.sequenceOf
 import org.mindrot.jbcrypt.BCrypt
+import requiredEmailField
+import requiredLoginCredentialsLens
+import requiredPasswordField
+import sessionCache
+import templateRenderer
 import java.util.*
 
 fun newSessionHandler(): HttpHandler = {
@@ -49,7 +55,7 @@ fun loginFailResponse (failure: LensFailure): Response {
 }
 
 fun destroySessionHandler(): HttpHandler = {
-    val cookie = it.cookie("acebook_session_id")
+    val cookie = it.cookie("belle_musica_session_id")
     val sessionId = cookie?.value
     if (sessionId != null) {
         sessionCache.invalidate(sessionId)
@@ -57,7 +63,7 @@ fun destroySessionHandler(): HttpHandler = {
 
     Response(Status.FOUND)
         .header("Location", "/")
-        .removeCookie("acebook_session_id")
+        .removeCookie("belle_musica_session_id")
 }
 
 private fun authenticateUser(email: String, password: String): User? {
