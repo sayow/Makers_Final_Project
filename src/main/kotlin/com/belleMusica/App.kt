@@ -15,6 +15,5 @@ val database = Database.connect("jdbc:postgresql://localhost:5432/${Environment.
 val app: HttpHandler = routes(
     "/" bind Method.GET to { request : Request ->
         getHomePage(request)
-
     }
 )

@@ -25,7 +25,7 @@ class HomePageTest {
         assertThat(response, hasStatus(Status.OK))
         assertThat(
             response,
-            hasBody(containsSubstring("Hello Ahhhh"))
+            hasBody(containsSubstring("Albums"))
         )
     }
 }
