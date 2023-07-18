@@ -24,5 +24,6 @@ fun main() {
 
     val port = Environment.port()
     val server = app.asServer(Undertow(port)).start()
+    println(database.name)
     println("Server started on " + server.port())
 }
