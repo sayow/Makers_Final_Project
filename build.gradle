@@ -11,7 +11,44 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    implementation "org.http4k:http4k-client-okhttp:${http4kVersion}"
+    implementation "org.http4k:http4k-core:${http4kVersion}"
+    implementation "org.http4k:http4k-format-jackson:${http4kVersion}"
+    implementation "org.http4k:http4k-multipart:${http4kVersion}"
+    implementation "org.http4k:http4k-server-undertow:${http4kVersion}"
+    implementation "org.http4k:http4k-template-handlebars:${http4kVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
+    implementation "org.http4k:http4k-bom:${http4kVersion}"
+    implementation "org.http4k:http4k-testing-webdriver:${http4kVersion}"
+    implementation "org.postgresql:postgresql:42.3.1"
+    implementation "org.ktorm:ktorm-core:${ktormVersion}"
+    implementation "org.mindrot:jbcrypt:0.4"
+    implementation "io.github.reactivecircus.cache4k:cache4k:0.9.0"
+    implementation "org.riversun:okhttp3-cookie-helper:1.0.0"
+    implementation 'com.github.sun00743.okhttpRequest:request:1.0.1'
+    implementation 'com.github.sun00743.okhttpRequest:request:1.0.1'
+    implementation 'com.github.sun00743.okhttpRequest:request:1.0.1'
+    implementation 'com.konloch:HTTPRequest:2.2.0'
+    implementation 'com.konloch:HTTPRequest:2.2.0'
+    implementation 'com.github.sun00743.okhttpRequest:request:1.0.1'
+    implementation 'com.github.sun00743.okhttpRequest:request:1.0.1'
+    implementation 'com.mastfrog.builder:builder-builder-demo:1.0.7'
+    implementation 'com.mastfrog.builder:builder-builder-parent:1.0.7'
+
+    testImplementation "org.http4k:http4k-testing-approval:${http4kVersion}"
+    testImplementation "org.http4k:http4k-testing-hamkrest:${http4kVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.http4k:http4k-bom:${http4kVersion}"
+    testImplementation "org.http4k:http4k-testing-hamkrest"
+    implementation(platform("org.http4k:http4k-bom:5.2.1.0"))
+    implementation ("org.http4k:http4k-core")
+    implementation ("org.http4k:http4k-multipart")
+    implementation ("org.ktorm:ktorm-core:3.4.1")
+    implementation ("io.reactivex.rxjava3:rxkotlin:3.0.0")
+    implementation "org.junit.jupiter:junit-jupiter-engine:5.9.2"
+    implementation "com.github.javadev:underscore:1.90"
+    implementation "org.json:json:20210307"
 }
 
 test {
