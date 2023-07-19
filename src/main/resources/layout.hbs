@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/static/Waveform.svg">
     <title>BelleMúsica</title>
     <link rel="stylesheet" href="/static/style.css"/>
@@ -18,13 +21,13 @@
     </div>
     {{# if currentUser}}
         <div id="right">
-            <a href="/sessions/clear">Sign-out</a>
+            <a href="/sessions/clear"><button class="nav-btn">Sign-out</button></a>
             <p>{{username}}</p>
         </div>
     {{else}}
         <div id="right">
-            <a href="/sessions/new">Login</a>
-            <a href="/users/new">Sign-up</a>
+            <a href="/sessions/new"><button class="nav-btn">Login</button></a>
+            <a href="/users/new"><button class="nav-btn">Sign-up</button></a>
         </div>
     {{/if}}
 </nav>
