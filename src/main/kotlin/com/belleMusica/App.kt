@@ -6,10 +6,12 @@ import org.http4k.core.*
 import org.http4k.core.cookie.cookie
 import org.http4k.filter.ServerFilters
 import org.http4k.lens.*
+import org.http4k.routing.ResourceLoader
 
 
 import org.http4k.routing.bind
 import org.http4k.routing.routes
+import org.http4k.routing.static
 import org.http4k.template.HandlebarsTemplates
 import org.ktorm.database.Database
 import org.ktorm.dsl.eq
@@ -75,5 +77,6 @@ val app: HttpHandler = routes(
     ),
    "/albums" bind Method.GET to { request : Request ->
         getAlbumPage(request)
-    }
+    },
+    "/static" bind static(ResourceLoader.Directory("src/main/resources/static"))
 )

@@ -1,0 +1,13 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-size: 62.5%;
+
+    --nav-bar-bg: #231F27;
+    --highlight-color: #E1D90F;
+    --bg-pg-color: #E3E9F1;
+    --light-text-color: #FFFFFF;
+
+}
