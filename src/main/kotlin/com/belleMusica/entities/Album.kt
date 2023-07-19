@@ -2,7 +2,8 @@ package com.belleMusica.entities
 
 data class Album(
     val id: String,
-    val artistName: String,
-    val albumName: String,
-    val imageUrl: String
+    var artistName: String,
+    var albumName: String,
+    var imageUrl: String,
+    var numberLikes: Int
 )

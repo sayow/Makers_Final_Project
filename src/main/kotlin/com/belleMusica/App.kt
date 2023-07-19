@@ -80,7 +80,12 @@ fun app(contexts: RequestContexts) = routes(
    "/albums" bind Method.GET to { request : Request ->
         getAlbumPage(request, contexts)
     },
-    "/static" bind static(ResourceLoader.Directory("src/main/resources/static"))
+    "/static" bind static(ResourceLoader.Directory("src/main/resources/static")),
+    "/like/{id}" bind Method.GET to {request: Request ->
+        val idParamLens = Path.string().of ( "id")
+        val id = idParamLens(request)
+        likeAlbum(contexts, request, id)
+    }
 )
 
 fun failResponse (failure: LensFailure) =
