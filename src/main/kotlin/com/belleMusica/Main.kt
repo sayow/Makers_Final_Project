@@ -1,6 +1,6 @@
 import com.belleMusica.Environment
 
-import com.belleMusica.handlers.getHomePage
+//import com.belleMusica.handlers.getHomePage
 import io.github.reactivecircus.cache4k.Cache
 import org.http4k.core.*
 import org.http4k.routing.bind
@@ -16,8 +16,9 @@ val sessionCache = Cache.Builder().build<String, Int>()
 
 
 fun main() {
+    val contexts = RequestContexts()
     val port = Environment.port()
-    val server = app.asServer(Undertow(port)).start()
+    val server = appHttpHandler(contexts).asServer(Undertow(port)).start()
     println(database.name)
     println("Server started on " + server.port())
 }

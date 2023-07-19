@@ -1,13 +1,15 @@
 {{#> layout}}
     {{#*inline "content"}}
-<div>
-<h1>Albums</h1>
-{{#each albumList}}
-    <p>{{artistName}}</p>
-    <p>{{albumName}}</p>
-    <image src="{{imageUrl}}"></image>
-{{/each}}
-</div>
-</body>
+        <div class="navbar-links">
+        </div>
+        <div>
+            <h1>Albums</h1>
+            {{#each albumList}}
+                <p>{{artistName}}</p>
+                <p>{{albumName}}</p>
+                <image src="{{imageUrl}}"></image>
+            {{/each}}
+        </div>
+        </body>
     {{/inline}}
 {{/layout}}
