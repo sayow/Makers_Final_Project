@@ -13,8 +13,6 @@ val albumList = mutableListOf<Album>()
 fun getAlbumPage(request: Request, contexts: RequestContexts): Response {
     val client = OkHttpClient()
     val currentUser: User? = contexts[request]["user"]
-
-    println("currentUser: $currentUser")
     val searchQuery = ""
     val request = APIRequest.Builder()
         .url("https://spotify23.p.rapidapi.com/search/?q=%{$searchQuery}%3E&type=multi&offset=0&limit=100&numberOfTopResults=20")
