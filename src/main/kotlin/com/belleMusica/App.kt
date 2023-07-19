@@ -63,10 +63,9 @@ fun authenticateRequestFromSession(contexts: RequestContexts) = Filter { next ->
 }
 
 val app: HttpHandler = routes(
-    "/" bind Method.GET to { request : Request ->
-        getHomePage(request)
-
-    },
+//    "/" bind Method.GET to { request : Request ->
+//        getHomePage(request)
+//                           },
     "/users" bind routes(
         "/new" bind Method.GET to newUserHandler(),
         "/" bind Method.POST to ServerFilters.CatchLensFailure(::signupFailResponse).then(createUserHandler())
