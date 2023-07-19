@@ -7,7 +7,86 @@
 
     --nav-bar-bg: #231F27;
     --highlight-color: #E1D90F;
+    --btn-hover: #cfc712;
     --bg-pg-color: #E3E9F1;
     --light-text-color: #FFFFFF;
 
 }
+
+body{
+    background: var(--bg-pg-color);
+    font-size: 3.6rem;
+    font-family: 'Lato', sans-serif;
+}
+nav {
+    background: var(--nav-bar-bg);
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    height: 15rem;
+    padding: 23px;
+}
+
+.nav-btn{
+    width: 15rem;
+    height: 6rem;
+    font-size: 2.4rem;
+    color: #FFFFFF;
+    background: var(--highlight-color);
+    border-radius: 12px;
+    border: none;
+}
+
+.nav-btn:hover{
+    background: var(--btn-hover) ;
+}
+
+#right{
+    display: flex;
+    gap: 4.5rem;
+}
+
+h1{
+    margin-inline: auto;
+    justify-content: center;
+    display: flex;
+    font-size: 3.6rem;
+    padding: 3.6rem 0;
+
+}
+
+.albums{
+    max-width: 80vw;
+    margin-inline: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+.album{
+    width: 15rem;
+    height: 22rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--light-text-color);
+    border-radius: 12px;
+    padding: 1.6rem 1rem;
+
+}
+.album p{
+    font-size: 1.6rem;
+}
+
+.album img {
+    object-fit: contain;
+    max-width: 13rem;
+    border-radius: 12px;
+}
+
+
