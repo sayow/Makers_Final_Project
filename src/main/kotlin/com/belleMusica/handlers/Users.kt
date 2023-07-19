@@ -57,7 +57,9 @@ fun createUserHandler(): HttpHandler = { request: Request ->
     val inputPassword = requiredPasswordField(form)
     val inputUsername = requiredUsernameField(form)
 
-    val userExists = database.sequenceOf(Users).filter { it.email eq inputEmail }.any()
+    val userExists = database.sequenceOf(Users).filter { it.email eq inputEmail}.any()
+    val usernameExists = database.sequenceOf(Users).filter { it.username eq inputUsername}.any()
+
 
     if (userExists) {
         Response(Status.BAD_REQUEST).body(
@@ -67,6 +69,17 @@ fun createUserHandler(): HttpHandler = { request: Request ->
                     "",
                     "",
                     "The user already exists, choose another email."
+                )
+            )
+        )
+    } else if (usernameExists) {
+        Response(Status.BAD_REQUEST).body(
+            templateRenderer(
+                SignUpViewModel(
+                    "",
+                    "",
+                    "",
+                    "The user already exists, choose another username."
                 )
             )
         )

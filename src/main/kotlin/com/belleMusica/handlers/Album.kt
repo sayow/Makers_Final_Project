@@ -1,19 +1,18 @@
 package com.belleMusica.handlers
 
-import com.belleMusica.entities.Album
+import com.belleMusica.entities.*
 import com.belleMusica.viewmodel.FeedViewModel
-import org.http4k.core.Request
-import org.http4k.core.Response
-import org.http4k.core.Status
 import templateRenderer
 import okhttp3.OkHttpClient
+import org.http4k.core.*
 import okhttp3.Request as APIRequest
 import org.json.JSONObject
 
 val albumList = mutableListOf<Album>()
 
-fun getAlbumPage(request: Request): Response {
+fun getAlbumPage(request: Request, contexts: RequestContexts): Response {
     val client = OkHttpClient()
+    val currentUser: User? = contexts[request]["user"]
     val searchQuery = ""
     val request = APIRequest.Builder()
         .url("https://spotify23.p.rapidapi.com/search/?q=%{$searchQuery}%3E&type=multi&offset=0&limit=100&numberOfTopResults=20")
@@ -29,7 +28,7 @@ fun getAlbumPage(request: Request): Response {
         val dataObject = itemsArray.getJSONObject(i).getJSONObject("data")
         albumList.add(createAlbum(dataObject))
     }
-    val feeds = FeedViewModel(albumList)
+    val feeds = FeedViewModel(albumList, currentUser = currentUser)
     val theContent = templateRenderer(feeds)
     return Response(Status.OK).body(theContent)
 }
@@ -44,4 +43,11 @@ fun createAlbum(dataObject: JSONObject): Album {
     val coverArtArray = dataObject.getJSONObject("coverArt").getJSONArray("sources")
     val imageUrl = coverArtArray.getJSONObject(0).getString("url")
     return Album(albumId, artistName, albumName, imageUrl)
+}
+
+fun usernameView(contexts: RequestContexts):  HttpHandler = { request: Request ->
+    val currentUser: User? = contexts[request]["user"]
+    val viewModel = FeedViewModel(albumList, currentUser = currentUser)
+    Response(Status.OK)
+        .body(templateRenderer(viewModel))
 }

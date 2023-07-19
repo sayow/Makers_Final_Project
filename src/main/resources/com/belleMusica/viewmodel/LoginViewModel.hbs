@@ -1,11 +1,13 @@
 {{#> layout}}
     {{#*inline "content"}}
-    <div class="container">
-        <form action="/sessions/" method="POST" >
-            <input type="text" name="email">
-            <input type="password" name="password">
-            <input type="submit" name="submit">
-        </form>
-    </div>
+        <div style="color:#FF0000">{{error}}</div>
+        <div class="container">
+            <form action="/sessions" method="POST">
+                <input type="text" id="email" name="email" placeholder="email@email.com">
+                <input type="password" id="password" name="password" placeholder="password">
+                <input type="submit" name="submit">
+            </form>
+        </div>
+
     {{/inline}}
 {{/ layout}}

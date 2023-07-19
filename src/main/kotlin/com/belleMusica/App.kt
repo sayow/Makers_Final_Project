@@ -4,6 +4,7 @@ import com.belleMusica.handlers.*
 import com.belleMusica.schemas.Users
 import org.http4k.core.*
 import org.http4k.core.cookie.cookie
+import org.http4k.filter.DebuggingFilters
 import org.http4k.filter.ServerFilters
 import org.http4k.lens.*
 import org.http4k.routing.ResourceLoader
@@ -64,7 +65,8 @@ fun authenticateRequestFromSession(contexts: RequestContexts) = Filter { next ->
     }
 }
 
-val app: HttpHandler = routes(
+fun app(contexts: RequestContexts) = routes(
+
     "/users" bind routes(
         "/new" bind Method.GET to newUserHandler(),
         "/" bind Method.POST to ServerFilters.CatchLensFailure(::signupFailResponse).then(createUserHandler())
@@ -76,7 +78,17 @@ val app: HttpHandler = routes(
         "/clear" bind Method.GET to destroySessionHandler()
     ),
    "/albums" bind Method.GET to { request : Request ->
-        getAlbumPage(request)
+        getAlbumPage(request, contexts)
     },
     "/static" bind static(ResourceLoader.Directory("src/main/resources/static"))
 )
+
+fun failResponse (failure: LensFailure) =
+    Response(Status.BAD_REQUEST).body("Invalid parameters 1")
+
+fun appHttpHandler(contexts: RequestContexts): HttpHandler =
+    ServerFilters.InitialiseRequestContext(contexts)
+        .then(ServerFilters.CatchLensFailure(::failResponse))
+        .then(DebuggingFilters.PrintRequest())
+        .then(authenticateRequestFromSession(contexts))
+        .then(app(contexts))

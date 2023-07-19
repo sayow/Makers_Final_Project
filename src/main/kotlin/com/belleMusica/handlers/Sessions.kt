@@ -41,7 +41,7 @@ fun createSessionHandler(): HttpHandler = { request: Request ->
         Response(Status.BAD_REQUEST).body(templateRenderer(viewModel))
     } else {
         injectSessionCookie(
-            Response(Status.FOUND).header("Location", "/"),
+            Response(Status.FOUND).header("Location", "/albums"),
             user
         )
     }
