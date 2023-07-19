@@ -32,7 +32,7 @@ CREATE SEQUENCE IF NOT EXISTS likes_id_seq;
 
 -- Table Definition
 CREATE TABLE "public"."likes" (
-                                  "id" int4 PRIMARY KEY NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+                                  "id" int4 PRIMARY KEY NOT NULL DEFAULT nextval('likes_id_seq'::regclass),
                                   "album_id" varchar NOT NULL,
                                   "user_id" int4 NOT NULL,
                                   CONSTRAINT fk_likes_user

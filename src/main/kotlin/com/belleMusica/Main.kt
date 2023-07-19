@@ -15,8 +15,8 @@ val sessionCache = Cache.Builder().build<String, Int>()
 
 
 fun main() {
+    val contexts = RequestContexts()
     val port = Environment.port()
-    val server = app.asServer(Undertow(port)).start()
-    println(database.name)
+    val server = appHttpHandler(contexts).asServer(Undertow(port)).start()
     println("Server started on " + server.port())
 }

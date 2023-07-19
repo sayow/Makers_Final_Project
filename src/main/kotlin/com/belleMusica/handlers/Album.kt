@@ -2,6 +2,7 @@ package com.belleMusica.handlers
 
 import com.belleMusica.entities.Album
 import com.belleMusica.entities.Like
+import com.belleMusica.entities.User
 import com.belleMusica.schemas.Likes
 import com.belleMusica.viewmodel.FeedViewModel
 import database
@@ -10,14 +11,27 @@ import org.http4k.core.Response
 import org.http4k.core.Status
 import templateRenderer
 import okhttp3.OkHttpClient
+import org.http4k.core.RequestContexts
 import okhttp3.Request as APIRequest
 import org.json.JSONObject
+import org.ktorm.dsl.and
 import org.ktorm.entity.add
+import org.ktorm.dsl.eq
+import org.ktorm.entity.filter
 import org.ktorm.entity.sequenceOf
+import org.ktorm.entity.toList
 
-val albumList = mutableListOf<Album>()
+var albumList = mutableListOf<Album>()
 
-fun getAlbumPage(request: Request): Response {
+fun getAlbumPage(): Response {
+    val orderedAlbumList = albumList.sortedByDescending{it.numberLikes}
+    println(orderedAlbumList)
+    val feeds = FeedViewModel(orderedAlbumList)
+    val theContent = templateRenderer(feeds)
+    return Response(Status.OK).body(theContent)
+}
+
+fun getSpotifyAlbums() {
     val client = OkHttpClient()
     val searchQuery = ""
     val request = APIRequest.Builder()
@@ -30,13 +44,11 @@ fun getAlbumPage(request: Request): Response {
     val responseContent = response.body?.string()
     val jsonObject = JSONObject(responseContent)
     val itemsArray = jsonObject.getJSONObject("albums").getJSONArray("items")
+    albumList.clear()
     for (i in 0 until itemsArray.length()) {
         val dataObject = itemsArray.getJSONObject(i).getJSONObject("data")
         albumList.add(createAlbum(dataObject))
     }
-    val feeds = FeedViewModel(albumList)
-    val theContent = templateRenderer(feeds)
-    return Response(Status.OK).body(theContent)
 }
 
 fun createAlbum(dataObject: JSONObject): Album {
@@ -48,17 +60,39 @@ fun createAlbum(dataObject: JSONObject): Album {
     val albumName = dataObject.getString("name")
     val coverArtArray = dataObject.getJSONObject("coverArt").getJSONArray("sources")
     val imageUrl = coverArtArray.getJSONObject(0).getString("url")
-    return Album(albumId, artistName, albumName, imageUrl)
+    return Album(albumId, artistName, albumName, imageUrl, getNumberLikesAlbum(albumId))
 }
 
-fun likeAlbum(request: Request, likedAlbumId: String): Response {
-    val newLike = Like {
-     // temporarily hardcoded while log in is being developed
-        userId = 2
-        albumId = likedAlbumId
+fun likeAlbum(contexts: RequestContexts, request: Request, likedAlbumId: String): Response {
+    val currentUser: User? = contexts[request]["user"]
+    println(currentUser)
+    if (currentUser != null) {
+        if (!isAlbumLikedByUser(likedAlbumId, currentUser.id)) {
+            val newLike = Like {
+                userId = currentUser.id
+                albumId = likedAlbumId
+            }
+            albumList.forEach() {
+                if (it.id == likedAlbumId) {
+                    it.numberLikes += 1
+                }
+            }
+            database.sequenceOf(Likes).add(newLike)
+        }
     }
-    database.sequenceOf(Likes).add(newLike)
     return Response(Status.SEE_OTHER)
         .header("Location", "/albums")
         .body("")
+}
+
+fun getNumberLikesAlbum(albumId: String): Int {
+    return  database.sequenceOf(Likes)
+        .filter{it.albumId eq albumId}
+        .toList().count()
+}
+fun isAlbumLikedByUser(albumId: String, userId: Int): Boolean {
+    return database.sequenceOf(Likes)
+        .filter{(it.albumId eq albumId) and (it.userId eq userId)}
+        .toList()
+        .isNotEmpty()
 }

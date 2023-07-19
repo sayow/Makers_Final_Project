@@ -8,6 +8,7 @@ import org.http4k.lens.string
 import com.belleMusica.schemas.Users
 import org.http4k.core.*
 import org.http4k.core.cookie.cookie
+import org.http4k.filter.DebuggingFilters
 import org.http4k.filter.ServerFilters
 import org.http4k.lens.*
 
@@ -64,7 +65,7 @@ fun authenticateRequestFromSession(contexts: RequestContexts) = Filter { next ->
     }
 }
 
-val app: HttpHandler = routes(
+fun app(contexts: RequestContexts) = routes(
     "/users" bind routes(
         "/new" bind Method.GET to newUserHandler(),
         "/" bind Method.POST to ServerFilters.CatchLensFailure(::signupFailResponse).then(createUserHandler())
@@ -75,13 +76,20 @@ val app: HttpHandler = routes(
         "/" bind Method.POST to ServerFilters.CatchLensFailure(::loginFailResponse).then(createSessionHandler()),
         "/clear" bind Method.GET to destroySessionHandler()
     ),
-   "/albums" bind Method.GET to { request : Request ->
-        getAlbumPage(request)
-    },
+   "/albums" bind Method.GET to { getAlbumPage() },
     "/like/{id}" bind Method.GET to {request: Request ->
-        println("IN ROUTE like")
         val idParamLens = Path.string().of ( "id")
-        val id =idParamLens(request)
-        likeAlbum(request, id)
+        val id = idParamLens(request)
+        likeAlbum(contexts, request, id)
     }
 )
+
+fun failResponse (failure: LensFailure) =
+    Response(Status.BAD_REQUEST).body("Invalid parameters")
+
+fun appHttpHandler(contexts: RequestContexts): HttpHandler =
+    ServerFilters.InitialiseRequestContext(contexts)
+        .then(ServerFilters.CatchLensFailure(::failResponse))
+        .then(DebuggingFilters.PrintRequest())
+        .then(authenticateRequestFromSession(contexts))
+        .then(app(contexts))
