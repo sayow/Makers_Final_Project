@@ -66,11 +66,7 @@ fun authenticateRequestFromSession(contexts: RequestContexts) = Filter { next ->
 }
 
 fun app(contexts: RequestContexts) = routes(
-//    "/" bind Method.GET to { request : Request ->
-//        getHomePage(request)
-//
-//    },
-//    "/" bind Method.GET to indexHandler(contexts),
+
     "/users" bind routes(
         "/new" bind Method.GET to newUserHandler(),
         "/" bind Method.POST to ServerFilters.CatchLensFailure(::signupFailResponse).then(createUserHandler())
