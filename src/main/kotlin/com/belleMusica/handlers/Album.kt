@@ -37,7 +37,6 @@ fun getSpotifyAlbums() {
         .build()
     val response = client.newCall(request).execute()
     val responseContent = response.body?.string()
-    println(responseContent)
     val jsonObject = JSONObject(responseContent)
     val itemsArray = jsonObject.getJSONObject("albums").getJSONArray("items")
     albumList.clear()
@@ -69,7 +68,6 @@ fun usernameView(contexts: RequestContexts):  HttpHandler = { request: Request -
 
 fun likeAlbum(contexts: RequestContexts, request: Request, likedAlbumId: String): Response {
     val currentUser: User? = contexts[request]["user"]
-    println(currentUser)
     if (currentUser != null) {
         if (!isAlbumLikedByUser(likedAlbumId, currentUser.id)) {
             val newLike = Like {

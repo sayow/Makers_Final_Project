@@ -91,11 +91,6 @@ fun app(contexts: RequestContexts) = routes(
         "/updateProfilePicture" bind Method.POST to checkAuthenticated(contexts).then(updateProfilePicture(contexts))
     )
 )
-fun getStaticPath(): String {
-    val path = System.getenv("STATIC_FOLDER")
-    println(path)
-    return path
-}
 fun failResponse (failure: LensFailure) =
     Response(Status.BAD_REQUEST).body("Invalid parameters 1")
 
