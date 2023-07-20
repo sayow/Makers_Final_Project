@@ -9,13 +9,26 @@
                 }
             }
         </script>
+        <div class="wrapper">
         <div id = "profileCard">
             <p>Hello {{currentUser.username}}</p>
             <img src="{{currentUser.profilePicture}}" alt="...">
+        </div>
+        <div id="updateProfilePicture">
             <form method="POST" enctype=multipart/form-data action="/profile/updateProfilePicture">
                 <input type="file" id="profile_picture" name="profile_picture" onchange="checkProfilePicture()"/>
                 <input type="submit" id="submit" class="hidden"/>
             </form>
+        </div>
+         <div id="liked-albums">
+             {{#each likedAlbums}}
+                 <div class="album">
+                     <img src="{{imageUrl}}" alt="Album's photo"/>
+                     <p>{{artistName}}</p>
+                     <p>{{albumName}}</p>
+                 </div>
+             {{/each}}
+         </div>
         </div>
     {{/inline}}
 {{/layout}}

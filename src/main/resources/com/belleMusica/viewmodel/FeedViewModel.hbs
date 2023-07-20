@@ -4,9 +4,9 @@
         <div class="albums">
             {{#each albumList}}
                 <div class="album">
+                <img src="{{imageUrl}}" alt="Album's photo"/>
                 <p>{{artistName}}</p>
                 <p>{{albumName}}</p>
-                <img src="{{imageUrl}}" alt="Album's photo"/>
                 <button><a href="/like/{{id}}">like</a></button>
                 </div>
             {{/each}}

@@ -12,6 +12,9 @@
     --light-text-color: #FFFFFF;
 
 }
+.hidden{
+    visibility: hidden;
+}
 
 body{
     background: var(--bg-pg-color);
@@ -103,6 +106,23 @@ h1{
     object-fit: contain;
 }
 
+
+.wrapper{
+    display: grid;
+    grid-template-areas: "A C"
+    "B C";
+    grid-template-rows: max-content;
+}
+
+#profileCard{
+    margin: 2rem 3rem;
+    background: var(--light-text-color);
+    width: 200px;
+    height: 240px;
+    border-radius: 12px;
+    grid-area: A;
+}
+
 #profileCard img{
     width: 200px;
     height: 200px;
@@ -110,9 +130,15 @@ h1{
     object-fit: contain;
 }
 
-.hidden{
-    visibility: hidden;
-}
 
+#updateProfilePicture{
+    grid-area: B;
+}
+ #liked-albums{
+     grid-area: C;
+     display: flex;
+     flex-wrap: wrap;
+     gap: 2rem;
+ }
 
 
