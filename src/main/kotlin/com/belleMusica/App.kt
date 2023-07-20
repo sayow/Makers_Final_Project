@@ -85,7 +85,10 @@ fun app(contexts: RequestContexts) = routes(
         val idParamLens = Path.string().of ( "id")
         val id = idParamLens(request)
         likeAlbum(contexts, request, id)
-    }
+    },
+    "/profile" bind routes(
+        "/" bind Method.GET to viewProfile(contexts)
+    )
 )
 
 fun failResponse (failure: LensFailure) =

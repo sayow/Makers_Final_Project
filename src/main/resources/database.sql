@@ -17,7 +17,7 @@ CREATE TABLE "public"."users" (
                                   "username" varchar NOT NULL UNIQUE,
                                   "email" varchar NOT NULL UNIQUE,
                                   "encrypted_password" varchar NOT NULL,
-                                  "profile_picture" varchar
+                                  "profile_picture" varchar DEFAULT '/static/s.png'
 );
 DROP TABLE IF EXISTS "public"."likes" CASCADE;
 -- This script only contains the table creation statements and does not fully represent the table in the database. It's still missing: indices, triggers. Do not use it as a backup.

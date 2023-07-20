@@ -21,13 +21,22 @@
     </div>
     {{# if currentUser}}
         <div id="right">
-            <a href="/sessions/clear"><button class="nav-btn">Sign-out</button></a>
-            <p>{{username}}</p>
+            <p>@{{currentUser.username}}</p>
+            <a href="/profile" title="My Account">
+                <img src="{{currentUser.profilePicture}}" alt="...">
+            </a>
+            <a href="/sessions/clear">
+                <button class="nav-btn">Sign-out</button>
+            </a>
         </div>
     {{else}}
         <div id="right">
-            <a href="/sessions/new"><button class="nav-btn">Login</button></a>
-            <a href="/users/new"><button class="nav-btn">Sign-up</button></a>
+            <a href="/sessions/new">
+                <button class="nav-btn">Login</button>
+            </a>
+            <a href="/users/new">
+                <button class="nav-btn">Sign-up</button>
+            </a>
         </div>
     {{/if}}
 </nav>

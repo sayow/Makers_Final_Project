@@ -48,6 +48,7 @@ nav {
 #right{
     display: flex;
     gap: 4.5rem;
+    align-items: center;
 }
 
 h1{
@@ -88,5 +89,19 @@ h1{
     max-width: 13rem;
     border-radius: 12px;
 }
+
+#right p{
+    color: white;
+    font-size: 24px;
+
+}
+
+#right img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
 
 
