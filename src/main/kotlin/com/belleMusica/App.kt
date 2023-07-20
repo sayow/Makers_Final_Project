@@ -36,6 +36,7 @@ val requiredSignupFormLens = Body.webForm(
     requiredPasswordField,
     requiredUsernameField
 ).toLens()
+
 fun checkAuthenticated(contexts: RequestContexts) = Filter { next ->
     {
         if (contexts[it].get<Int>("user_id") == null) {
