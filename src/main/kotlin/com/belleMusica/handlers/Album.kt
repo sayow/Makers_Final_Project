@@ -37,12 +37,14 @@ fun getSpotifyAlbums() {
         .build()
     val response = client.newCall(request).execute()
     val responseContent = response.body?.string()
+    println(responseContent)
     val jsonObject = JSONObject(responseContent)
     val itemsArray = jsonObject.getJSONObject("albums").getJSONArray("items")
     albumList.clear()
     for (i in 0 until itemsArray.length()) {
         val dataObject = itemsArray.getJSONObject(i).getJSONObject("data")
         albumList.add(createAlbum(dataObject))
+
     }
 }
 

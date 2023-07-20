@@ -1,10 +1,21 @@
 {{#> layout}}
     {{#*inline "content"}}
-
-<div id = "profileCard">
-    <img src="{{currentUser.profilePicture}}" alt="...">
-    <p>Hello {{currentUser.username}}</p>
-</div>
-
+        <script>
+            function checkProfilePicture() {
+                let profilePicture = document.getElementById("profile_picture");
+                let submitButton = document.getElementById("submit");
+                if (profilePicture.files.length > 0) {
+                    submitButton.classList.remove("hidden");
+                }
+            }
+        </script>
+        <div id = "profileCard">
+            <p>Hello {{currentUser.username}}</p>
+            <img src="{{currentUser.profilePicture}}" alt="...">
+            <form method="POST" enctype=multipart/form-data action="/profile/updateProfilePicture">
+                <input type="file" id="profile_picture" name="profile_picture" onchange="checkProfilePicture()"/>
+                <input type="submit" id="submit" class="hidden"/>
+            </form>
+        </div>
     {{/inline}}
 {{/layout}}
