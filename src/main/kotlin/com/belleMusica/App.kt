@@ -66,7 +66,6 @@ fun authenticateRequestFromSession(contexts: RequestContexts) = Filter { next ->
 }
 
 fun app(contexts: RequestContexts) = routes(
-
     "/users" bind routes(
         "/new" bind Method.GET to newUserHandler(),
         "/" bind Method.POST to ServerFilters.CatchLensFailure(::signupFailResponse).then(createUserHandler())
@@ -81,16 +80,17 @@ fun app(contexts: RequestContexts) = routes(
         getAlbumPage(request, contexts)
     },
     "/static" bind static(ResourceLoader.Directory("src/main/resources/static")),
+    "/static-photos" bind static(ResourceLoader.Directory("/Users/ddu4537/Projects/static")),
     "/like/{id}" bind Method.GET to {request: Request ->
         val idParamLens = Path.string().of ( "id")
         val id = idParamLens(request)
         likeAlbum(contexts, request, id)
     },
     "/profile" bind routes(
-        "/" bind Method.GET to viewProfile(contexts)
+        "/" bind Method.GET to checkAuthenticated(contexts).then(viewProfile(contexts)),
+        "/updateProfilePicture" bind Method.POST to checkAuthenticated(contexts).then(updateProfilePicture(contexts))
     )
 )
-
 fun failResponse (failure: LensFailure) =
     Response(Status.BAD_REQUEST).body("Invalid parameters 1")
 

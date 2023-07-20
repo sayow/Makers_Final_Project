@@ -103,5 +103,16 @@ h1{
     object-fit: contain;
 }
 
+#profileCard img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
 
 
