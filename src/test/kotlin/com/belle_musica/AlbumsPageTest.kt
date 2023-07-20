@@ -98,6 +98,7 @@ class AlbumsPageTest {
         driver = ChromeDriver()
         driver.get("http://localhost:9999/users/new")
 
+        //Register a new user
         val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail@mail2.com")
         Thread.sleep(2000)
         val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("Password@123")
@@ -105,7 +106,18 @@ class AlbumsPageTest {
         val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Ahmed")
         Thread.sleep(2000)
         val submit = driver.findElement(By.id("submitbutton")).click()
+        Thread.sleep(2000)
 
+        //Login in teh user created
+        val emailLogin: Unit = driver.findElement(By.id("email")).sendKeys("mail@mail2.com")
+        Thread.sleep(2000)
+        val passwordLogin: Unit = driver.findElement(By.id("password")).sendKeys("Password@123")
+        Thread.sleep(2000)
+        val submitLogin = driver.findElement(By.id("submit")).click()
+        Thread.sleep(2000)
+
+        //Check the sorting by likes
+        val likeButton = driver.findElement(By.id("likeButton>Music")).click()
     }
 
 
