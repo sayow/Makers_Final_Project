@@ -81,7 +81,7 @@ fun app(contexts: RequestContexts) = routes(
         getAlbumPage(request, contexts)
     },
     "/static" bind static(ResourceLoader.Directory("src/main/resources/static")),
-    "/static-photos" bind static(ResourceLoader.Directory("/Users/ddu4537/Projects/static")),
+    "/static-photos" bind static(ResourceLoader.Directory("/Users/pcu4808/IdeaProjects/static")),
     "/like/{id}" bind Method.GET to {request: Request ->
         val idParamLens = Path.string().of ( "id")
         val id = idParamLens(request)

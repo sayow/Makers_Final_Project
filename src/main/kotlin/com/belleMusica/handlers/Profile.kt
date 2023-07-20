@@ -1,21 +1,40 @@
 package com.belleMusica.handlers
 
 import com.belleMusica.entities.*
+import com.belleMusica.schemas.Likes
+import com.belleMusica.schemas.Likes.userId
 import com.belleMusica.schemas.Users
 import com.belleMusica.viewmodel.ProfileViewModel
 import database
 import org.http4k.core.*
 import org.ktorm.dsl.eq
 import org.ktorm.dsl.update
+import org.ktorm.entity.filter
+import org.ktorm.entity.sequenceOf
+import org.ktorm.entity.toList
 import templateRenderer
 import java.io.File
 import java.util.*
 
 fun viewProfile(contexts: RequestContexts):  HttpHandler = { request: Request ->
     val currentUser: User? = contexts[request]["user"]
-    val viewModel = ProfileViewModel(currentUser = currentUser)
-    Response(Status.OK)
-        .body(templateRenderer(viewModel))
+     if (currentUser != null) {
+         val likedAlbums = getLikedAlbums(currentUser)
+         val viewModel = ProfileViewModel(currentUser = currentUser, likedAlbums)
+         Response(Status.OK)
+             .body(templateRenderer(viewModel))
+     } else {
+         Response(Status.BAD_REQUEST)
+     }
+}
+
+fun getLikedAlbums(currentUser: User): List<Album>{
+    val likedList = database.sequenceOf(Likes).filter { userId eq currentUser.id }.toList()
+    val likedAlbumsIdList: List<String> =likedList.map { obj ->
+        obj.albumId
+    }
+    return albumList.filter {
+        it.id in likedAlbumsIdList }
 }
 
 fun updateProfilePicture(contexts: RequestContexts): HttpHandler = {request: Request ->
@@ -29,7 +48,7 @@ fun updateProfilePicture(contexts: RequestContexts): HttpHandler = {request: Req
         val extension = filename.substringAfterLast(".", "")
         val savedFilename = "$uniqueFilename.$extension"
         //TODO: Remember to change/hide the absolute path before merging
-        val uploadDirectory = "/Users/ddu4537/Projects/static"
+        val uploadDirectory = "/Users/pcu4808/IdeaProjects/static"
         val savedFile = File(uploadDirectory, savedFilename)
         inputStream.use { input ->
             savedFile.outputStream().use { output ->
@@ -53,3 +72,4 @@ fun updateProfilePicture(contexts: RequestContexts): HttpHandler = {request: Req
         Response(Status.BAD_REQUEST).body("No picture uploaded")
     }
 }
+
