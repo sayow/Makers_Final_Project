@@ -15,6 +15,8 @@ import org.ktorm.entity.toList
 import templateRenderer
 import java.io.File
 import java.util.*
+import org.dotenv.vault.dotenvVault
+val dotenv = dotenvVault()
 
 fun viewProfile(contexts: RequestContexts):  HttpHandler = { request: Request ->
     val currentUser: User? = contexts[request]["user"]
@@ -48,7 +50,7 @@ fun updateProfilePicture(contexts: RequestContexts): HttpHandler = {request: Req
         val extension = filename.substringAfterLast(".", "")
         val savedFilename = "$uniqueFilename.$extension"
         //TODO: Remember to change/hide the absolute path before merging
-        val uploadDirectory = "your path"
+        val uploadDirectory = dotenv["UPLOAD_FOLDER"]
         val savedFile = File(uploadDirectory, savedFilename)
         inputStream.use { input ->
             savedFile.outputStream().use { output ->
