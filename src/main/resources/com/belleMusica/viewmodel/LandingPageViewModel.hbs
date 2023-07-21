@@ -4,9 +4,11 @@
         <div class="text">
     <h2>Text 1</h2>
         </div>
-        <div>
+        <div class="container">
         {{#each mostPopularAlbums}}
            <p> {{albumName}}</p>
+            <img src="{{imageUrl}}">
+            <p>{{artistName}}</p>
         {{/each}}
         </div>
     {{/inline}}
