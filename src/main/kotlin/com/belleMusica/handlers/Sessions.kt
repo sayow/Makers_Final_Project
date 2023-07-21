@@ -1,6 +1,5 @@
 package com.belleMusica.handlers
 
-import com.belleMusica.*
 import com.belleMusica.entities.User
 import com.belleMusica.schemas.Users
 import com.belleMusica.viewmodel.LoginViewModel
@@ -42,7 +41,7 @@ fun createSessionHandler(): HttpHandler = { request: Request ->
     } else {
         getSpotifyAlbums()
         injectSessionCookie(
-            Response(Status.FOUND).header("Location", "/albums"),
+            Response(Status.FOUND).header("Location", "/"),
             user
         )
     }
@@ -61,7 +60,6 @@ fun destroySessionHandler(): HttpHandler = {
     if (sessionId != null) {
         sessionCache.invalidate(sessionId)
     }
-
     Response(Status.FOUND)
         .header("Location", "/")
         .removeCookie("belle_musica_session_id")
