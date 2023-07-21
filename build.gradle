@@ -57,14 +57,29 @@ dependencies {
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.10.0'
     testImplementation 'org.seleniumhq.selenium:selenium-grid:4.10.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+
+
+    implementation("org.jetbrains.exposed:exposed-core:0.32.1")
+    implementation("org.jetbrains.exposed:exposed-dao:0.32.1")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.32.1")
+    implementation("org.jetbrains.exposed:exposed-java-time:0.32.1")
+    implementation("org.postgresql:postgresql:42.2.24")
+
+//    implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.6.0'
+
+//    implementation 'org.seleniumhq.selenium:selenium-support:4.10.0'
+//    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.10.0'
+
     implementation("com.github.dotenv-org:dotenv-vault-kotlin:0.0.2")
     implementation 'io.github.cdimascio:dotenv-kotlin:6.4.1'
+
 
 }
 
 test {
     useJUnitPlatform()
-    systemProperty "webdriver.chrome.driver", "/Users/mmu4265/Desktop/driver/chromedriver"
+
+    systemProperty "webdriver.chrome.driver", "PATH CHROME DRIVER"
 
 }
 

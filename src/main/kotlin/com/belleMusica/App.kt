@@ -80,8 +80,10 @@ fun app(contexts: RequestContexts) = routes(
         "/clear" bind Method.GET to destroySessionHandler()
     ),
    "/albums" bind Method.GET to checkAuthenticated(contexts).then(getAlbumPage(contexts)),
+
     "/static" bind static(ResourceLoader.Directory(dotenv["STATIC_FOLDER"])),
     "/static-photos" bind static(ResourceLoader.Directory(dotenv["UPLOAD_FOLDER"])),
+
     "/like/{id}" bind Method.GET to {request: Request ->
         val idParamLens = Path.string().of ( "id")
         val id = idParamLens(request)
