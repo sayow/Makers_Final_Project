@@ -41,7 +41,7 @@ fun createSessionHandler(): HttpHandler = { request: Request ->
     } else {
         getSpotifyAlbums()
         injectSessionCookie(
-            Response(Status.FOUND).header("Location", "/"),
+            Response(Status.FOUND).header("Location", "/albums"),
             user
         )
     }
