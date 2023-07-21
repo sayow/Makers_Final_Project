@@ -112,6 +112,8 @@ h1{
     grid-template-areas: "A C"
     "B C";
     grid-template-rows: max-content;
+    grid-template-columns: 1fr 3fr;
+
 }
 
 #profileCard{
@@ -139,6 +141,8 @@ h1{
      display: flex;
      flex-wrap: wrap;
      gap: 2rem;
+     background: var(--light-text-color);
+
  }
 
 
