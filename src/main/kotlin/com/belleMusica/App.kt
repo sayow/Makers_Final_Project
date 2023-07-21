@@ -77,9 +77,7 @@ fun app(contexts: RequestContexts) = routes(
         "/" bind Method.POST to ServerFilters.CatchLensFailure(::loginFailResponse).then(createSessionHandler()),
         "/clear" bind Method.GET to destroySessionHandler()
     ),
-   "/albums" bind Method.GET to { request : Request ->
-        getAlbumPage(request, contexts)
-    },
+   "/albums" bind Method.GET to checkAuthenticated(contexts).then(getAlbumPage(contexts)),
     "/static" bind static(ResourceLoader.Directory("src/main/resources/static")),
     "/static-photos" bind static(ResourceLoader.Directory("/Users/pcu4808/IdeaProjects/static")),
     "/like/{id}" bind Method.GET to {request: Request ->

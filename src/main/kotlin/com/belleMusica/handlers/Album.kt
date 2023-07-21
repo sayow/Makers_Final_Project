@@ -18,12 +18,12 @@ import org.ktorm.entity.toList
 
 val albumList = mutableListOf<Album>()
 
-fun getAlbumPage(request: Request, contexts: RequestContexts): Response {
+fun getAlbumPage(contexts: RequestContexts): HttpHandler = { request ->
     val currentUser: User? = contexts[request]["user"]
     val orderedAlbumList = albumList.sortedByDescending { it.numberLikes }
     val feeds = FeedViewModel(orderedAlbumList, currentUser)
     val theContent = templateRenderer(feeds)
-    return Response(Status.OK).body(theContent)
+    Response(Status.OK).body(theContent)
 }
 
 fun getSpotifyAlbums() {
