@@ -28,7 +28,6 @@ class RegisterUserTest {
         driver.get("http://localhost:9999/users/new")
     }
 
-
     @Test
     fun `Successfully created a new user`() {
         val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail@mail2.com")
@@ -39,7 +38,6 @@ class RegisterUserTest {
         Thread.sleep(2000)
         val submit = driver.findElement(By.id("submitbutton")).click()
         Thread.sleep(2000)
-
         val ourUser = database.sequenceOf(Users)
             .filter { it.id eq 1 }
             .firstOrNull()
@@ -47,6 +45,7 @@ class RegisterUserTest {
             assert(ourUser.email == "mail@mail2.com")
         }
     }
+
     @Test
     fun `User Not created because of incorrect email`() {
         val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail")
@@ -57,10 +56,49 @@ class RegisterUserTest {
         Thread.sleep(2000)
         val submit = driver.findElement(By.id("submitbutton")).click()
         Thread.sleep(2000)
-
         val ourUser = database.sequenceOf(Users).toList().size
-        println(database.sequenceOf(Users).toList())
-        println(ourUser)
+        assert(ourUser == 1)
+    }
+
+    @Test
+    fun `User Not created because of existing email`() {
+        val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail@mail2.com")
+        Thread.sleep(2000)
+        val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("Password@123")
+        Thread.sleep(2000)
+        val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Ahmed2")
+        Thread.sleep(2000)
+        val submit = driver.findElement(By.id("submitbutton")).click()
+        Thread.sleep(2000)
+        val ourUser = database.sequenceOf(Users).toList().size
+        assert(ourUser == 1)
+    }
+
+    @Test
+    fun `User Not created because of incorrect password`() {
+        val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail1@mail2.com")
+        Thread.sleep(2000)
+        val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("123")
+        Thread.sleep(2000)
+        val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Ahmed")
+        Thread.sleep(2000)
+        val submit = driver.findElement(By.id("submitbutton")).click()
+        Thread.sleep(2000)
+        val ourUser = database.sequenceOf(Users).toList().size
+        assert(ourUser == 1)
+    }
+
+    @Test
+    fun `User Not created because of existing username`() {
+        val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail1@mail2.com")
+        Thread.sleep(2000)
+        val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("Password@123")
+        Thread.sleep(2000)
+        val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Ahmed")
+        Thread.sleep(2000)
+        val submit = driver.findElement(By.id("submitbutton")).click()
+        Thread.sleep(2000)
+        val ourUser = database.sequenceOf(Users).toList().size
         assert(ourUser == 1)
 
     }
