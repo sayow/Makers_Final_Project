@@ -1,5 +1,6 @@
 import com.belleMusica.Environment
 import com.belleMusica.handlers.*
+import org.dotenv.vault.dotenvVault
 
 import com.belleMusica.schemas.Users
 import org.http4k.core.*
@@ -19,7 +20,7 @@ import org.ktorm.dsl.eq
 import org.ktorm.entity.find
 import org.ktorm.entity.sequenceOf
 
-
+val dotenv = dotenvVault()
 val requiredEmailField = FormField.nonEmptyString().required("email")
 val requiredPasswordField = FormField.nonEmptyString().required("password")
 val requiredUsernameField = FormField.nonEmptyString().required("username")
@@ -78,8 +79,8 @@ fun app(contexts: RequestContexts) = routes(
         "/clear" bind Method.GET to destroySessionHandler()
     ),
    "/albums" bind Method.GET to checkAuthenticated(contexts).then(getAlbumPage(contexts)),
-    "/static" bind static(ResourceLoader.Directory("your path")),
-    "/static-photos" bind static(ResourceLoader.Directory("your path")),
+    "/static" bind static(ResourceLoader.Directory(dotenv["STATIC_FOLDER"])),
+    "/static-photos" bind static(ResourceLoader.Directory(dotenv["UPLOAD_FOLDER"])),
     "/like/{id}" bind Method.GET to {request: Request ->
         val idParamLens = Path.string().of ( "id")
         val id = idParamLens(request)
