@@ -60,9 +60,13 @@ fun destroySessionHandler(): HttpHandler = {
     if (sessionId != null) {
         sessionCache.invalidate(sessionId)
     }
-    Response(Status.FOUND)
+
+    val expiredCookie = Cookie("belle_musica_session_id", "", path = "/", maxAge = 0)
+    Response(Status.SEE_OTHER)
         .header("Location", "/")
         .removeCookie("belle_musica_session_id")
+        .cookie(expiredCookie)
+        .body("")
 }
 
 private fun authenticateUser(email: String, password: String): User? {
