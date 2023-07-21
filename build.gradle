@@ -56,6 +56,12 @@ dependencies {
     testImplementation 'org.seleniumhq.selenium:selenium-grid:4.10.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 
+    implementation("org.jetbrains.exposed:exposed-core:0.32.1")
+    implementation("org.jetbrains.exposed:exposed-dao:0.32.1")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.32.1")
+    implementation("org.jetbrains.exposed:exposed-java-time:0.32.1")
+    implementation("org.postgresql:postgresql:42.2.24")
+
 //    implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.6.0'
 
 //    implementation 'org.seleniumhq.selenium:selenium-support:4.10.0'
@@ -65,7 +71,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    systemProperty "webdriver.chrome.driver", "/Path/to/yout/chrome/driver"
+    systemProperty "webdriver.chrome.driver", "/Users/ssu4807/Downloads/chromedriver_mac64/chromedriver"
 }
 
 compileKotlin {

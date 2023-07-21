@@ -48,7 +48,7 @@ fun updateProfilePicture(contexts: RequestContexts): HttpHandler = {request: Req
         val extension = filename.substringAfterLast(".", "")
         val savedFilename = "$uniqueFilename.$extension"
         //TODO: Remember to change/hide the absolute path before merging
-        val uploadDirectory = "your path"
+        val uploadDirectory = "/Users/ssu4807/Downloads/static_belleMusica"
         val savedFile = File(uploadDirectory, savedFilename)
         inputStream.use { input ->
             savedFile.outputStream().use { output ->

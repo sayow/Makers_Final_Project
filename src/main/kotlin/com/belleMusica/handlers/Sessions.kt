@@ -41,7 +41,7 @@ fun createSessionHandler(): HttpHandler = { request: Request ->
     } else {
         getSpotifyAlbums()
         injectSessionCookie(
-            Response(Status.FOUND).header("Location", "/"),
+            Response(Status.FOUND).header("Location", "/albums"),
             user
         )
     }
@@ -61,7 +61,7 @@ fun destroySessionHandler(): HttpHandler = {
         sessionCache.invalidate(sessionId)
     }
     Response(Status.FOUND)
-        .header("Location", "/")
+        .header("Location", "/albums")
         .removeCookie("belle_musica_session_id")
 }
 

@@ -78,8 +78,8 @@ fun app(contexts: RequestContexts) = routes(
         "/clear" bind Method.GET to destroySessionHandler()
     ),
    "/albums" bind Method.GET to checkAuthenticated(contexts).then(getAlbumPage(contexts)),
-    "/static" bind static(ResourceLoader.Directory("your path")),
-    "/static-photos" bind static(ResourceLoader.Directory("your path")),
+    "/static" bind static(ResourceLoader.Directory("/Users/ssu4807/IdeaProjects/finalProject/src/main/resources/static/")),
+    "/static-photos" bind static(ResourceLoader.Directory("/Users/ssu4807/Downloads/static_belleMusica")),
     "/like/{id}" bind Method.GET to {request: Request ->
         val idParamLens = Path.string().of ( "id")
         val id = idParamLens(request)
