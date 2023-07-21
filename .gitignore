@@ -3,6 +3,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+.env
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -27,7 +28,6 @@ out/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-.env
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
