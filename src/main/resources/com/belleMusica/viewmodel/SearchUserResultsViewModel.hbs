@@ -1,0 +1,17 @@
+{{#> layout}}
+    {{#*inline "content"}}
+        <div>{{message}}</div>
+        <div class="usersFound">
+        {{#each foundUsers}}
+            <div class="foundUserCard">
+                <img class="profile_picture" src="{{this.profilePicture}}">
+                <div class="userNameAdEmail">
+                    <p class="username"> {{username}}</p>
+                    <p class="email"> {{email}}</p>
+                    <button>Follow</button>
+                </div>
+            </div>
+        {{/each}}
+        </div>
+    {{/inline}}
+{{/ layout}}

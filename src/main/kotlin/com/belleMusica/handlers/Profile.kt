@@ -5,6 +5,7 @@ import com.belleMusica.schemas.Likes
 import com.belleMusica.schemas.Likes.userId
 import com.belleMusica.schemas.Users
 import com.belleMusica.viewmodel.ProfileViewModel
+import com.belleMusica.viewmodel.SearchUserResultsViewModel
 import database
 import org.http4k.core.*
 import org.ktorm.dsl.eq
@@ -16,6 +17,10 @@ import templateRenderer
 import java.io.File
 import java.util.*
 import org.dotenv.vault.dotenvVault
+import org.ktorm.dsl.like
+import requiredSearchUserInputField
+import requiredSearchUserLens
+
 val dotenv = dotenvVault()
 
 fun viewProfile(contexts: RequestContexts):  HttpHandler = { request: Request ->
@@ -75,5 +80,16 @@ fun updateProfilePicture(contexts: RequestContexts): HttpHandler = {request: Req
     } else {
         Response(Status.BAD_REQUEST).body("No picture uploaded")
     }
+}
+
+fun searchUser(contexts: RequestContexts): HttpHandler = { request: Request ->
+    val currentUser: User? = contexts[request]["user"]
+    val searchUserForm = requiredSearchUserLens(request)
+    val searchUserInput = requiredSearchUserInputField(searchUserForm)
+    val users = database.sequenceOf(Users).filter { it.username like "%$searchUserInput%" }.toList()
+    println(users)
+    val message = if(users.isEmpty()) "No user was matching with your search" else null
+    val resultsViewModel = SearchUserResultsViewModel(currentUser, users, message)
+    Response(Status.OK).body(templateRenderer(resultsViewModel))
 }
 
