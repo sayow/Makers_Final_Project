@@ -24,6 +24,7 @@ val dotenv = dotenvVault()
 val requiredEmailField = FormField.nonEmptyString().required("email")
 val requiredPasswordField = FormField.nonEmptyString().required("password")
 val requiredUsernameField = FormField.nonEmptyString().required("username")
+val requiredSearchUserInputField = FormField.nonEmptyString().required("search_user_input")
 
 val requiredLoginCredentialsLens = Body.webForm(
     Validator.Strict,
@@ -36,6 +37,11 @@ val requiredSignupFormLens = Body.webForm(
     requiredEmailField,
     requiredPasswordField,
     requiredUsernameField
+).toLens()
+
+val requiredSearchUserLens = Body.webForm(
+    Validator.Strict,
+    requiredSearchUserInputField
 ).toLens()
 
 fun checkAuthenticated(contexts: RequestContexts) = Filter { next ->
@@ -92,7 +98,8 @@ fun app(contexts: RequestContexts) = routes(
     "/profile" bind routes(
         "/" bind Method.GET to checkAuthenticated(contexts).then(viewProfile(contexts)),
         "/updateProfilePicture" bind Method.POST to checkAuthenticated(contexts).then(updateProfilePicture(contexts))
-    )
+    ),
+    "/searchUser" bind Method.POST to checkAuthenticated(contexts).then(searchUser(contexts))
 )
 fun failResponse (failure: LensFailure) =
     Response(Status.BAD_REQUEST).body("Invalid parameters 1")

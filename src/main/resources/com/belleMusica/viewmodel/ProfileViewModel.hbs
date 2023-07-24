@@ -30,5 +30,9 @@
              {{/each}}
          </div>
         </div>
+        <form method="POST" action="/searchUser">
+            <input type="text" name="search_user_input"/>
+            <input type="submit" id="submit" class="hidden"/>
+        </form>
     {{/inline}}
 {{/layout}}
