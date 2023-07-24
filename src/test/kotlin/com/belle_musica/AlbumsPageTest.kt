@@ -18,37 +18,41 @@ import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
 import org.junit.jupiter.api.TestInstance
 import org.openqa.selenium.chrome.ChromeOptions
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AlbumsPageTest {
+
     private val cookieHelper = OkHttp3CookieHelper()
     val client = OkHttp(OkHttpClient().newBuilder().cookieJar(cookieHelper.cookieJar()).build())
-    val signUpForm = WebForm(
-        mapOf(
-            "email" to listOf("email@email.com"),
-            "password" to listOf("Password@123"),
-            "username" to listOf("user")
-        )
-    )
-    val loginForm = WebForm(
-        mapOf(
-            "email" to listOf("email@email.com"),
-            "password" to listOf("Password@123"),
-        )
-    )
+
+    @AfterAll
+    fun signOutUser(){
+        // Close the browser after the test is finished
+        val signOutButton = driver.findElement(By.id("signout")).click()
+        Thread.sleep(2000)
+        driver.quit()
+    }
+    companion object {
+        @JvmStatic
+        @BeforeAll
+        fun restoreDb(): Unit {
+            database.delete(Users) { it.id eq it.id }
+        }
+    }
+
     private lateinit var driver: WebDriver
 
     @BeforeEach
     fun silentMood() {
-//        val chromeOptions = ChromeOptions()
-//        chromeOptions.addArguments("--headless")
-//        chromeOptions.addArguments("--disable-gpu")
-        driver = ChromeDriver()
+        val chromeOptions = ChromeOptions()
+        chromeOptions.addArguments("--headless")
+        chromeOptions.addArguments("--disable-gpu")
+        driver = ChromeDriver(chromeOptions)
         driver.get("http://localhost:9999/users/new")
     }
 
     @BeforeEach
-    fun setupUser() {
-        //Register a new user
+    fun registerNewUser() {
         val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail@mail2.com")
         Thread.sleep(2000)
         val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("Password@123")
@@ -57,7 +61,10 @@ class AlbumsPageTest {
         Thread.sleep(2000)
         val submit = driver.findElement(By.id("submitbutton")).click()
         Thread.sleep(2000)
-        //Login in the user created
+    }
+
+    @BeforeEach
+    fun loginUser(){
         val emailLogin: Unit = driver.findElement(By.id("email")).sendKeys("mail@mail2.com")
         Thread.sleep(2000)
         val passwordLogin: Unit = driver.findElement(By.id("password")).sendKeys("Password@123")
@@ -76,18 +83,10 @@ class AlbumsPageTest {
         Thread.sleep(2000)
     }
 
-    @AfterAll
-    fun signOutUser(){
-        // Close the browser after the test is finished
-        val signOutButton = driver.findElement(By.id("signout")).click()
-        Thread.sleep(2000)
-        driver.quit()
+    @Test
+    fun `test logout the user`() {
+
     }
-    companion object {
-        @JvmStatic
-        @BeforeAll
-        fun restoreDb(): Unit {
-            database.delete(Users) { it.id eq it.id }
-        }
-    }
+
+
 }
