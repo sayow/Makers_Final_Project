@@ -16,7 +16,8 @@ fun getLandingPage(): HttpHandler = {
             theNewList.add(it)
         }
     }
-    val landingPageViewModel = LandingPageViewModel( theNewList.sortedByDescending { it.numberLikes }.slice(1..3),"Welcome to Belle Musica!",)
+
+    val landingPageViewModel = LandingPageViewModel( theNewList.sortedByDescending { it.numberLikes }.take(10))
 
     Response(Status.OK)
         .body(templateRenderer(landingPageViewModel))
