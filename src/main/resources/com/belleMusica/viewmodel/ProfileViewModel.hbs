@@ -40,6 +40,14 @@
                         </svg>
                     </button>
                 </form>
+                <h2>Users you follow</h2>
+                {{#each followedUsers}}
+                    <div class="followedUsers">
+                        <img class="profile_picture" src="{{profilePicture}}">
+                        <p class="username"> {{username}}</p>
+                        <p class="email">{{email}}</p>
+                    </div>
+                {{/each}}
             </div>
         </div>
 

@@ -32,3 +32,18 @@ CREATE TABLE "public"."likes" (
                                   CONSTRAINT fk_likes_user
                                       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+DROP SEQUENCE IF EXISTS followers_id_seq CASCADE;
+CREATE SEQUENCE IF NOT EXISTS followers_id_seq;
+-- Table Definition
+CREATE TABLE "public"."followers" (
+                                  "id" int4 PRIMARY KEY NOT NULL DEFAULT nextval('followers_id_seq'::regclass),
+                            -- the follower_id represents the user id of the user who follows another user
+                                  "follower_id" int4 NOT NULL,
+                            -- the followed_user_id represents the user id of the user who is being followed by another user.
+                                  "followed_user_id" int4 NOT NULL,
+                                  CONSTRAINT fk_follower
+                                      FOREIGN KEY (follower_id) REFERENCES users(id) ON DELETE CASCADE,
+                                  CONSTRAINT fk_followed_user
+                                      FOREIGN KEY (followed_user_id) REFERENCES users(id) ON DELETE CASCADE
+);
