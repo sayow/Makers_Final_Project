@@ -22,7 +22,7 @@
     {{# if currentUser}}
         <div id="right">
             <p>@{{currentUser.username}}</p>
-            <a href="/profile" title="My Account">
+            <a id="profile_picture" href="/profile" title="My Account">
                 <img src="{{currentUser.profilePicture}}" alt="...">
             </a>
             <a href="/sessions/clear">

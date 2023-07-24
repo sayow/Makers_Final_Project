@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.ktorm.dsl.delete
 import org.ktorm.dsl.eq
@@ -61,12 +62,10 @@ class AlbumsPageTest {
         Thread.sleep(2000)
     }
 
-   @AfterAll
-   fun driverShutDown(){
-       driver.quit()
-
-   }
-
+//   @AfterAll
+//   fun driverShutDown(){
+//       driver.quit()
+//   }
 
     @Test
     fun `like an album and test if it goes to the first place`() {
@@ -77,8 +76,17 @@ class AlbumsPageTest {
         assert(firstElement.contains(">Music"))
         Thread.sleep(2000)
     }
+    @Test
+    fun `test if the liked album appears in the user profile page`() {
+        val clickOnProfileButton = driver.findElement(By.id("profile_picture")).click()
+        Thread.sleep(2000)
+        val likedAlbumElements = driver.findElements(By.className("album"))
+        val firstElement = likedAlbumElements[0].text
+        assert(firstElement.contains(">Music"))
+        Thread.sleep(2000)
+    }
 
-
+    @AfterAll
     @Test
     fun `test logout the user and check going back to the main page`() {
         val logoutButton = driver.findElement(By.id("signout")).click()
@@ -87,5 +95,7 @@ class AlbumsPageTest {
         val firstElement = albumElements[0].text
         assert(firstElement.contains(">Music"))
     }
+
+
 
 }
