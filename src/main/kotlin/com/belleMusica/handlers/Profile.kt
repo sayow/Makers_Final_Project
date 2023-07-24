@@ -50,7 +50,9 @@ fun updateProfilePicture(contexts: RequestContexts): HttpHandler = {request: Req
         val extension = filename.substringAfterLast(".", "")
         val savedFilename = "$uniqueFilename.$extension"
         //TODO: Remember to change/hide the absolute path before merging
+
         val uploadDirectory = dotenv["UPLOAD_FOLDER"]
+
         val savedFile = File(uploadDirectory, savedFilename)
         inputStream.use { input ->
             savedFile.outputStream().use { output ->

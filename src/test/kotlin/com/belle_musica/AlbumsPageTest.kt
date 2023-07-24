@@ -1,12 +1,13 @@
 package com.belle_musica
-
 import com.belleMusica.schemas.Users
 import database
 import okhttp3.OkHttpClient
 import org.http4k.client.OkHttp
 import org.http4k.core.*
 import org.http4k.lens.WebForm
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.ktorm.dsl.delete
 import org.ktorm.dsl.eq
@@ -16,10 +17,8 @@ import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
 import org.junit.jupiter.api.TestInstance
 import org.openqa.selenium.chrome.ChromeOptions
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AlbumsPageTest {
-
     private val cookieHelper = OkHttp3CookieHelper()
     val client = OkHttp(OkHttpClient().newBuilder().cookieJar(cookieHelper.cookieJar()).build())
     val signUpForm = WebForm(
@@ -35,17 +34,19 @@ class AlbumsPageTest {
             "password" to listOf("Password@123"),
         )
     )
-
     private lateinit var driver: WebDriver
 
-    @Test
-    fun `test clicking on the Like button`() {
+    @BeforeAll
+    fun silentMood() {
         val chromeOptions = ChromeOptions()
         chromeOptions.addArguments("--headless")
         chromeOptions.addArguments("--disable-gpu")
         driver = ChromeDriver(chromeOptions)
         driver.get("http://localhost:9999/users/new")
+    }
 
+    @BeforeEach
+    fun setupUser() {
         //Register a new user
         val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail@mail2.com")
         Thread.sleep(2000)
@@ -55,7 +56,6 @@ class AlbumsPageTest {
         Thread.sleep(2000)
         val submit = driver.findElement(By.id("submitbutton")).click()
         Thread.sleep(2000)
-
         //Login in the user created
         val emailLogin: Unit = driver.findElement(By.id("email")).sendKeys("mail@mail2.com")
         Thread.sleep(2000)
@@ -63,20 +63,24 @@ class AlbumsPageTest {
         Thread.sleep(2000)
         val submitLogin = driver.findElement(By.id("submit")).click()
         Thread.sleep(2000)
+    }
 
-        //Check the sorting by likes
+    @Test
+    fun `test clicking on the Like button`() {
         val likeButton = driver.findElement(By.id("likeButton>Music")).click()
-
-        //Assertions
+        Thread.sleep(2000)
         val albumElements = driver.findElements(By.className("album"))
         val firstElement = albumElements[0].text
         assert(firstElement.contains(">Music"))
-
-        // Close the browser after the test is finished
-        driver.quit()
+        Thread.sleep(2000)
     }
 
-
+    @AfterAll
+    fun signOutUser(){
+        // Close the browser after the test is finished
+        val signOutButton = driver.findElement(By.id("signout")).click()
+        Thread.sleep(2000)
+    }
     companion object {
         @JvmStatic
         @BeforeAll
@@ -84,20 +88,4 @@ class AlbumsPageTest {
             database.delete(Users) { it.id eq it.id }
         }
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

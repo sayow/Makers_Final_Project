@@ -16,6 +16,7 @@ fun getLandingPage(): HttpHandler = {
             theNewList.add(it)
         }
     }
+
     val landingPageViewModel = LandingPageViewModel( theNewList.sortedByDescending { it.numberLikes }.take(10))
 
     Response(Status.OK)
