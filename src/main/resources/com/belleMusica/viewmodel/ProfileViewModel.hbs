@@ -10,29 +10,38 @@
             }
         </script>
         <div class="wrapper">
-        <div id = "profileCard">
-            <p>Hello {{currentUser.username}}</p>
-            <img src="{{currentUser.profilePicture}}" alt="...">
-        </div>
-        <div id="updateProfilePicture">
-            <form method="POST" enctype=multipart/form-data action="/profile/updateProfilePicture">
-                <input type="file" id="profile_picture" name="profile_picture" onchange="checkProfilePicture()"/>
-                <input type="submit" id="submit" class="hidden"/>
-            </form>
-        </div>
-         <div id="liked-albums">
-             {{#each likedAlbums}}
-                 <div class="album">
-                     <img src="{{imageUrl}}" alt="Album's photo"/>
-                     <p>{{artistName}}</p>
-                     <p>{{albumName}}</p>
+                <div id = "profileCard">
+                    <p>Hello {{currentUser.username}}</p>
+                    <img src="{{currentUser.profilePicture}}" alt="...">
+                </div>
+                <div id="updateProfilePicture">
+                    <form method="POST" enctype=multipart/form-data action="/profile/updateProfilePicture">
+                        <input type="file" id="profile_picture" name="profile_picture" onchange="checkProfilePicture()"/>
+                        <input type="submit" id="submit" class="hidden"/>
+                    </form>
+                </div>
+                 <div id="liked-albums">
+                     {{#each likedAlbums}}
+                         <div class="album">
+                             <img src="{{imageUrl}}" alt="Album's photo"/>
+                             <p>{{artistName}}</p>
+                             <p>{{albumName}}</p>
+                         </div>
+                     {{/each}}
                  </div>
-             {{/each}}
-         </div>
+            <div class="friendsList">
+                <form method="POST" action="/searchUser">
+                    <label for="search_user_input">
+                    <input type="text" name="search_user_input" placeholder="Find other profiles here"/>
+                    </label>
+                    <button type="submit" id="SearchBtn">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M28.53 27.47L22.1075 21.0475C23.939 18.9413 24.8811 16.2063 24.7354 13.419C24.5896 10.6316 23.3673 8.00981 21.3262 6.10611C19.285 4.20241 16.5845 3.16559 13.7938 3.21419C11.0031 3.26279 8.34027 4.39303 6.36665 6.36665C4.39303 8.34027 3.26279 11.0031 3.21419 13.7938C3.16559 16.5845 4.20241 19.285 6.10611 21.3262C8.00981 23.3673 10.6316 24.5896 13.419 24.7354C16.2063 24.8811 18.9413 23.939 21.0475 22.1075L27.47 28.53C27.6122 28.6625 27.8002 28.7346 27.9945 28.7312C28.1888 28.7277 28.3742 28.649 28.5116 28.5116C28.649 28.3742 28.7277 28.1888 28.7312 27.9945C28.7346 27.8002 28.6625 27.6122 28.53 27.47ZM4.75 14C4.75 12.1705 5.2925 10.3821 6.3089 8.86097C7.32531 7.33982 8.76996 6.15422 10.4602 5.45411C12.1504 4.754 14.0103 4.57082 15.8046 4.92773C17.5989 5.28465 19.2471 6.16562 20.5407 7.45926C21.8344 8.75289 22.7153 10.4011 23.0723 12.1954C23.4292 13.9897 23.246 15.8496 22.5459 17.5398C21.8458 19.23 20.6602 20.6747 19.139 21.6911C17.6179 22.7075 15.8295 23.25 14 23.25C11.5477 23.247 9.19661 22.2715 7.46255 20.5374C5.72848 18.8034 4.75297 16.4523 4.75 14Z" fill="white"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
         </div>
-        <form method="POST" action="/searchUser">
-            <input type="text" name="search_user_input"/>
-            <input type="submit" id="submit" class="hidden"/>
-        </form>
+
     {{/inline}}
 {{/layout}}

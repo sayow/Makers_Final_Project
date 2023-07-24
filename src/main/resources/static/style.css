@@ -108,21 +108,26 @@ h1{
 
 
 .wrapper{
+    height: 85vh;
     display: grid;
-    grid-template-areas: "A C"
-    "B C";
-    grid-template-rows: max-content;
-    grid-template-columns: 1fr 3fr;
+    grid-template-areas: "A C D"
+    "B C D";
+    grid-template-columns: .5fr 2fr 1fr;
 
 }
 
-#profileCard{
+#profileCard {
     margin: 2rem 3rem;
     background: var(--light-text-color);
     width: 200px;
     height: 240px;
     border-radius: 12px;
     grid-area: A;
+    display: flex;
+    font-size: 2.4rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #profileCard img{
@@ -135,6 +140,16 @@ h1{
 
 #updateProfilePicture{
     grid-area: B;
+    margin: 2rem 3rem;
+    background: var(--light-text-color);
+    width: 200px;
+    height: 240px;
+    border-radius: 12px;
+    display: flex;
+    font-size: 2.4rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
  #liked-albums{
      grid-area: C;
@@ -142,7 +157,33 @@ h1{
      flex-wrap: wrap;
      gap: 2rem;
      background: var(--light-text-color);
+     margin: 2rem 1rem 2rem 0;
+     border-radius: 12px;
  }
+ .friendsList{
+     grid-area: D;
+    margin: 2rem 1rem;
+    background: var(--light-text-color);
+    border-radius: 12px;
+    padding: 1rem 2rem;
+}
+ .friendsList form{
+     display: flex;
+ }
+ .friendsList button#SearchBtn{
+     width: 36px;
+     border-radius: 0 12px 12px 0;
+     border-left: none;
+     background: var(--highlight-color);
+ }
+.friendsList input{
+    width: 37rem;
+    height: 4rem;
+    font-size: 1.4rem;
+    padding: 1rem 2rem;
+    border-radius: 12px 0 0 12px;
+}
+
 
 .wrapper-landpage{
     display: flex;
@@ -195,4 +236,80 @@ h1{
 
 .container img {
     width: 60px;
+}
+.usersFound {
+    height: 100vh;
+    width: 80vw;
+    margin: auto;
+    padding: 2rem 0;
+}
+.foundUserCard{
+    width: 150px;
+    height: 220px;
+    font-size: 24px;
+    background: var(--light-text-color);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.foundUserCard .profile_picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: contain;
+    border: 2px solid var(--highlight-color);
+}
+
+.foundUserCard .userNameAdEmail button{
+    background: var(--highlight-color);
+    border: none;
+    width: 10rem;
+    height: 3rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--light-text-color);
+}
+.foundUserCard .userNameAdEmail button:hover{
+    background: var(--btn-hover);
+}
+
+.cardSignUp,
+.cardLogin{
+    width: 60vw;
+    height: 50vh;
+    background: var(--light-text-color);
+    margin: 6rem auto;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.cardSignUp form,
+.cardLogin form {
+    display: flex;
+    width: 44rem;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.cardSignUp input,
+.cardLogin input{
+    height: 4rem;
+    border-radius: 12px;
+    padding: 1rem;
+    font-size: 1.4rem;
+    border: 1px solid var(--nav-bar-bg);
+}
+
+.cardSignUp #submitbutton,
+.cardLogin #submit{
+    background: var(--highlight-color);
+    font-size: 2.4rem;
+    color: var(--light-text-color);
 }
