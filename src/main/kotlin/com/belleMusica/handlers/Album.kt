@@ -32,7 +32,7 @@ fun getSpotifyAlbums() {
     val request = APIRequest.Builder()
         .url("https://spotify23.p.rapidapi.com/search/?q=%{$searchQuery}%3E&type=multi&offset=0&limit=100&numberOfTopResults=20")
         .get()
-        .addHeader("X-RapidAPI-Key", "85abc57478msh62edece0b781437p1cefecjsnf08b903629a0")
+        .addHeader("X-RapidAPI-Key", "e91c51f4ffmshdee6f0cef9a733bp1f89c6jsn344240c7df6a")
         .addHeader("X-RapidAPI-Host", "spotify23.p.rapidapi.com")
         .build()
     val response = client.newCall(request).execute()

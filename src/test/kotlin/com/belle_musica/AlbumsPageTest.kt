@@ -6,6 +6,7 @@ import org.http4k.client.OkHttp
 import org.http4k.core.*
 import org.http4k.lens.WebForm
 import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -36,12 +37,12 @@ class AlbumsPageTest {
     )
     private lateinit var driver: WebDriver
 
-    @BeforeAll
+    @BeforeEach
     fun silentMood() {
-        val chromeOptions = ChromeOptions()
-        chromeOptions.addArguments("--headless")
-        chromeOptions.addArguments("--disable-gpu")
-        driver = ChromeDriver(chromeOptions)
+//        val chromeOptions = ChromeOptions()
+//        chromeOptions.addArguments("--headless")
+//        chromeOptions.addArguments("--disable-gpu")
+        driver = ChromeDriver()
         driver.get("http://localhost:9999/users/new")
     }
 
@@ -80,6 +81,7 @@ class AlbumsPageTest {
         // Close the browser after the test is finished
         val signOutButton = driver.findElement(By.id("signout")).click()
         Thread.sleep(2000)
+        driver.quit()
     }
     companion object {
         @JvmStatic
