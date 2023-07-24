@@ -142,7 +142,57 @@ h1{
      flex-wrap: wrap;
      gap: 2rem;
      background: var(--light-text-color);
-
  }
 
+.wrapper-landpage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top:10px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+    background: var(--light-text-color);
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    align-items: center;
+}
 
+#cardTitle {
+    font-size: 24px;
+}
+
+#likedAlbums {
+    width: 850px;
+    height: 420px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    padding: 1rem 1.6rem;
+}
+
+
+.likedAlbumCard {
+    width: 400px;
+    display: grid;
+    grid-template-areas: "A B B"
+    "A C C";
+}
+
+.likedAlbumCard.albumPhoto{
+    grid-area: A;
+}
+.likedAlbumCard.albumName{
+    grid-area: B;
+}
+
+.likedAlbumCard.artistName{
+    grid-area: C;
+}
+
+.container img {
+    width: 60px;
+}
