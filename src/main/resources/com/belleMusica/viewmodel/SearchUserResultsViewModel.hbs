@@ -9,6 +9,12 @@
                     <p class="username"> {{username}}</p>
                     <p class="email"> {{email}}</p>
                     <a href="/follow/{{id}}" id = "follow_btn"><button >Follow</button></a>
+                        {{#if isFollowed}}
+                            <button>Unfollow</button>
+                        {{else}}
+                            <button>Follow</button>
+                        {{/if}}
+                    </a>
                 </div>
             </div>
         {{/each}}
