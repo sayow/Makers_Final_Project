@@ -9,7 +9,7 @@ import templateRenderer
 
 
 fun getLandingPage(): HttpHandler = {
-    getSpotifyAlbums()
+    getSpotifyAlbums(null)
     val theNewList = mutableListOf<Album>()
     albumList.forEach{
         if(it.numberLikes != 0){

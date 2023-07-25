@@ -1,6 +1,7 @@
 package com.belleMusica.handlers
 
 import com.belleMusica.entities.*
+import com.belleMusica.schemas.Followers
 import com.belleMusica.schemas.Likes
 import com.belleMusica.viewmodel.FeedViewModel
 import database
@@ -10,6 +11,7 @@ import org.http4k.core.*
 import okhttp3.Request as APIRequest
 import org.json.JSONObject
 import org.ktorm.dsl.and
+import org.ktorm.dsl.delete
 import org.ktorm.dsl.eq
 import org.ktorm.entity.add
 import org.ktorm.entity.filter
@@ -26,7 +28,7 @@ fun getAlbumPage(contexts: RequestContexts): HttpHandler = { request ->
     Response(Status.OK).body(theContent)
 }
 
-fun getSpotifyAlbums() {
+fun getSpotifyAlbums(currentUser: User?) {
     val client = OkHttpClient()
     val searchQuery = ""
     val request = APIRequest.Builder()
@@ -42,12 +44,12 @@ fun getSpotifyAlbums() {
     albumList.clear()
     for (i in 0 until itemsArray.length()) {
         val dataObject = itemsArray.getJSONObject(i).getJSONObject("data")
-        albumList.add(createAlbum(dataObject))
+        albumList.add(createAlbum(dataObject, currentUser))
 
     }
 }
 
-fun createAlbum(dataObject: JSONObject): Album {
+fun createAlbum(dataObject: JSONObject, currentUser: User?): Album {
     // Parse the responseContent JSON and extract the id, album, artist, and image data
     val albumId = dataObject.getString("uri").split(":").last()
     val artistsArray = dataObject.getJSONObject("artists").getJSONArray("items")
@@ -56,7 +58,12 @@ fun createAlbum(dataObject: JSONObject): Album {
     val albumName = dataObject.getString("name")
     val coverArtArray = dataObject.getJSONObject("coverArt").getJSONArray("sources")
     val imageUrl = coverArtArray.getJSONObject(0).getString("url")
-    return Album(albumId, artistName, albumName, imageUrl, getNumberLikesAlbum(albumId))
+    val isAlbumLikedByCurrentUser =
+        if(currentUser!=null) isAlbumLikedByUser(albumId, currentUser.id)
+        else null
+    return Album(albumId, artistName, albumName, imageUrl,
+                getNumberLikesAlbum(albumId),
+                isAlbumLikedByCurrentUser)
 }
 
 fun usernameView(contexts: RequestContexts):  HttpHandler = { request: Request ->
@@ -77,9 +84,20 @@ fun likeAlbum(contexts: RequestContexts, request: Request, likedAlbumId: String)
             albumList.forEach() {
                 if (it.id == likedAlbumId) {
                     it.numberLikes += 1
+                    it.isLikedByCurrentUser = true
                 }
             }
             database.sequenceOf(Likes).add(newLike)
+        } else {
+            database.delete(Likes) { like ->
+                (currentUser.id eq like.userId) and (likedAlbumId eq like.albumId)
+            }
+            albumList.forEach() {
+                if (it.id == likedAlbumId) {
+                    it.numberLikes -= 1
+                    it.isLikedByCurrentUser = false
+                }
+            }
         }
     }
     return Response(Status.SEE_OTHER)

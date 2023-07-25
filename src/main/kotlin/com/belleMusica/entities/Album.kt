@@ -5,5 +5,6 @@ data class Album(
     var artistName: String,
     var albumName: String,
     var imageUrl: String,
-    var numberLikes: Int
+    var numberLikes: Int,
+    var isLikedByCurrentUser: Boolean?
 )

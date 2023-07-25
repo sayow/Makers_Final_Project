@@ -19,6 +19,28 @@ class FollowersBehaviourTest {
 
     @Test
     fun `click the search bar, search for a friend to follow and friend is added to following`(){
+        fromRegisterToSearch()
+        val follow = driver.findElement(By.id("follow_btn")).click()
+        val resultPageText = driver.findElement(By.tagName("p")).text
+        assert(resultPageText.contains("user"))
+    }
+    @Test
+    fun `click the search bar, find a friend, follow them, unfollow them`(){
+        fromRegisterToSearch()
+        val follow = driver.findElement(By.id("follow_btn")).click()
+        val unfollow = driver.findElement(By.id("unfollow-button")).click()
+        val followedUsers = driver.findElements(By.className("followedUsers"))
+        assert(followedUsers.size==0)
+    }
+
+    @Test
+    fun `search for a friend, visit their profile page`(){
+        fromRegisterToSearch()
+        val profilePicture = driver.findElement(By.className("profile_picture_search")).click()
+        val visitedUserUserName = driver.findElement(By.className("visitedUserName")).text
+        assert(visitedUserUserName.contains("user"))
+    }
+    fun fromRegisterToSearch(){
         driverSetup()
         setupAutoUser("mail@mail.com", "Password@123", "user")
         setupAutoUser("mail2@mail.com", "Password@123", "user2")
@@ -27,8 +49,6 @@ class FollowersBehaviourTest {
         val searchInput = driver.findElement(By.name("search_user_input")).sendKeys("user")
         val submit = driver.findElement(By.id("SearchBtn")).click()
         val resultPageText = driver.findElement(By.tagName("p")).text
-        val follow = driver.findElement(By.id("follow_btn")).click()
-        assert(resultPageText.contains("user"))
     }
 
     fun driverSetup(){
@@ -36,7 +56,7 @@ class FollowersBehaviourTest {
         val chromeOptions = ChromeOptions()
         chromeOptions.addArguments("--headless")
         chromeOptions.addArguments("--disable-gpu")
-        driver = ChromeDriver(chromeOptions)
+        driver = ChromeDriver()
         driver.get("http://localhost:9999/")
     }
     fun setupAutoUser(emailInput: String, passwordInput: String, usernameInput: String ) {
