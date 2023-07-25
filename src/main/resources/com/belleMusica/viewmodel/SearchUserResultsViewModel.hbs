@@ -3,20 +3,22 @@
         <div>{{message}}</div>
         <div class="usersFound">
         {{#each foundUsers}}
-            <div class="foundUserCard">
-                <img class="profile_picture" src="{{this.profilePicture}}">
-                <div class="userNameAdEmail">
-                    <p class="username"> {{username}}</p>
-                    <p class="email"> {{email}}</p>
-                    <a href="/follow/{{id}}" id = "follow_btn"><button >Follow</button></a>
-                        {{#if isFollowed}}
-                            <button>Unfollow</button>
-                        {{else}}
-                            <button>Follow</button>
-                        {{/if}}
-                    </a>
-                </div>
-            </div>
+                <a href="/{{id}}">
+                    <div class="foundUserCard">
+                        <img class="profile_picture" src="{{this.profilePicture}}">
+                        <div class="userNameAdEmail">
+                            <p class="username"> {{username}}</p>
+                            <p class="email"> {{email}}</p>
+                            <a href="/follow/{{id}}" id = "follow_btn">>
+                                {{#if isFollowed}}
+                                    <button>Unfollow</button>
+                                {{else}}
+                                    <button>Follow</button>
+                                {{/if}}
+                            </a>
+                        </div>
+                    </div>
+                </a>
         {{/each}}
         </div>
     {{/inline}}
