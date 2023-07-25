@@ -79,8 +79,7 @@ dependencies {
 test {
     useJUnitPlatform()
 
-    systemProperty "webdriver.chrome.driver", "/Users/ssu4807/Projects/chromedriver_mac64/chromedriver"
-}
+    systemProperty "webdriver.chrome.driver", "/Users/mmu4265/Desktop/driver/chromedriver"}
 
 compileKotlin {
     kotlinOptions.jvmTarget = '1.8'
