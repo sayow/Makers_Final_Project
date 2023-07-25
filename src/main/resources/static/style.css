@@ -74,25 +74,43 @@ h1{
     justify-content: space-between;
     gap: 2rem;
 }
-.album{
-    width: 15rem;
-    height: 22rem;
+.album,
+.followedUsers{
     display: flex;
     flex-direction: column;
     align-items: center;
     background: var(--light-text-color);
     border-radius: 12px;
     padding: 1.6rem 1rem;
+}
+.followedUsers{
+    width: 15rem;
+    height: 22rem;
+}
+.album {
+    position: relative;
+    z-index: -1;
+    width: 17rem;
+    height: 27rem;
 
 }
-.album p{
+
+.album p,
+.followedUsers p{
     font-size: 1.6rem;
 }
 
-.album img {
+.album img,
+.followedUsers img{
     object-fit: contain;
     max-width: 13rem;
     border-radius: 12px;
+}
+
+.likeBTN {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
 }
 
 #right p{
@@ -105,7 +123,7 @@ h1{
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 
@@ -122,7 +140,6 @@ h1{
 #profileCard,
 #updateProfilePicture{
     background: var(--light-text-color);
-    width: 250px;
     height: 330px;
     border-radius: 12px;
     display: flex;
@@ -134,18 +151,21 @@ h1{
 
 #profileCard{
     grid-area: A;
+    width: 250px;
+
 }
 
 #profileCard img{
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 
 #updateProfilePicture{
     grid-area: B;
+    width: 900px;
 }
 
 #modal {
@@ -162,6 +182,22 @@ h1{
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.9);
+}
+
+#photoForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profilePictureInput{
+    font-size: 2.4rem;
+}
+
+.closeBtn{
+    position: absolute;
+    top: 15px;
+    right: 35px;
 }
 
  #liked-albums{
@@ -267,7 +303,7 @@ h1{
     gap: 2rem;
 }
 
-.foundUserCard .profile_picture{
+.foundUserCard .profile_picture_search{
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -324,5 +360,4 @@ h1{
     font-size: 2.4rem;
     color: var(--light-text-color);
 }
-
 
