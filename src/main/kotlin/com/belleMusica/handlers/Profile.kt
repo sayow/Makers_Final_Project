@@ -2,6 +2,7 @@ package com.belleMusica.handlers
 
 import com.belleMusica.entities.*
 import com.belleMusica.schemas.Followers
+import com.belleMusica.schemas.Followers.followerId
 import com.belleMusica.schemas.Likes
 import com.belleMusica.schemas.Likes.userId
 import com.belleMusica.schemas.Users
@@ -110,11 +111,16 @@ fun searchUser(contexts: RequestContexts): HttpHandler = { request: Request ->
         users.filter { it.id != currentUser.id }
     } else listOf<User>()
     val message = if(users.isEmpty()) "No user was matching with your search" else null
+    for(user in filterUserList) {
+        if (currentUser != null) {
+            user.isFollowed = isUserFollowedByUser(currentUser.id, user.id)
+        }
+    }
     val resultsViewModel = SearchUserResultsViewModel(currentUser, filterUserList, message)
     Response(Status.OK).body(templateRenderer(resultsViewModel))
 }
 
-fun followUser(contexts: RequestContexts, request: Request, userId: Int): Response {
+fun toggleFollowUser(contexts: RequestContexts, request: Request, userId: Int): Response {
     val currentUser: User? = contexts[request]["user"]
     if (currentUser != null) {
         if (!isUserFollowedByUser(currentUser.id, userId)) {
@@ -123,6 +129,11 @@ fun followUser(contexts: RequestContexts, request: Request, userId: Int): Respon
                 followedUserId = userId
             }
             database.sequenceOf(Followers).add(newFollower)
+        }
+        else {
+            database.delete(Followers) { follower ->
+                (currentUser.id eq follower.followerId) and (userId eq follower.followedUserId)
+            }
         }
     }
     return Response(Status.SEE_OTHER)
