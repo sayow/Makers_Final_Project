@@ -7,8 +7,13 @@
                 <img src="{{imageUrl}}" alt="Album's photo"/>
                 <p>{{artistName}}</p>
                 <p>{{albumName}}</p>
-                <button id="likeButton{{albumName}}"><a href="/like/{{id}}">like</a></button>
-
+                    <a href="/like/{{id}}">
+                        {{#if isLikedByCurrentUser}}
+                            <button id="likeButton{{albumName}}">unlike</button>
+                        {{else}}
+                            <button id="unlikeButton{{albumName}}">like</button>
+                        {{/if}}
+                    </a>
                 </div>
             {{/each}}
         </div>
