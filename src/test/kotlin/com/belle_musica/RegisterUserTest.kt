@@ -49,13 +49,9 @@ class RegisterUserTest {
     @Test
     fun `User Not created because of incorrect email`() {
         val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail")
-        Thread.sleep(2000)
         val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("Password@123")
-        Thread.sleep(2000)
         val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Sara")
-        Thread.sleep(2000)
         val submit = driver.findElement(By.id("submitbutton")).click()
-        Thread.sleep(2000)
         val resultPageText = driver.findElement(By.tagName("body")).text
         assert(resultPageText.contains("The email is incorrect, choose a valid email."))
     }
@@ -66,13 +62,9 @@ class RegisterUserTest {
         val registerButton = driver.findElement(By.id("register-btn")).click()
 
         val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail@mail2.com")
-        Thread.sleep(2000)
         val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("Password@123")
-        Thread.sleep(2000)
         val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Sara")
-        Thread.sleep(2000)
         val submit = driver.findElement(By.id("submitbutton")).click()
-        Thread.sleep(2000)
         val ourUser = database.sequenceOf(Users).toList().size
         assert(ourUser == 1)
         val resultPageText = driver.findElement(By.tagName("body")).text
@@ -82,13 +74,9 @@ class RegisterUserTest {
     @Test
     fun `User Not created because of incorrect password`() {
         val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail1@mail2.com")
-        Thread.sleep(2000)
         val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("123")
-        Thread.sleep(2000)
         val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Sara")
-        Thread.sleep(2000)
         val submit = driver.findElement(By.id("submitbutton")).click()
-        Thread.sleep(2000)
         val ourUser = database.sequenceOf(Users).toList().size
         assert(ourUser == 0)
         val resultPageText = driver.findElement(By.tagName("body")).text

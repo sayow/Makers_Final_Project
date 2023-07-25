@@ -79,7 +79,7 @@ dependencies {
 test {
     useJUnitPlatform()
 
-    systemProperty "webdriver.chrome.driver", "PATH_TO_CHROME"
+    systemProperty "webdriver.chrome.driver", "PATH_TO_chromedriver"
 }
 
 compileKotlin {
