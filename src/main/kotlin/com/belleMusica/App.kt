@@ -99,7 +99,12 @@ fun app(contexts: RequestContexts) = routes(
         "/" bind Method.GET to checkAuthenticated(contexts).then(viewProfile(contexts)),
         "/updateProfilePicture" bind Method.POST to checkAuthenticated(contexts).then(updateProfilePicture(contexts))
     ),
-    "/searchUser" bind Method.POST to checkAuthenticated(contexts).then(searchUser(contexts))
+    "/searchUser" bind Method.POST to checkAuthenticated(contexts).then(searchUser(contexts)),
+    "follow/{id}" bind Method.GET to {request: Request ->
+        val idParamLens = Path.string().of ( "id")
+        val userId = idParamLens(request).toInt()
+        followUser(contexts, request, userId)
+    }
 )
 fun failResponse (failure: LensFailure) =
     Response(Status.BAD_REQUEST).body("Invalid parameters 1")

@@ -1,6 +1,7 @@
 package com.belleMusica.handlers
 
 import com.belleMusica.entities.*
+import com.belleMusica.schemas.Followers
 import com.belleMusica.schemas.Likes
 import com.belleMusica.schemas.Likes.userId
 import com.belleMusica.schemas.Users
@@ -8,8 +9,6 @@ import com.belleMusica.viewmodel.ProfileViewModel
 import com.belleMusica.viewmodel.SearchUserResultsViewModel
 import database
 import org.http4k.core.*
-import org.ktorm.dsl.eq
-import org.ktorm.dsl.update
 import org.ktorm.entity.filter
 import org.ktorm.entity.sequenceOf
 import org.ktorm.entity.toList
@@ -17,7 +16,8 @@ import templateRenderer
 import java.io.File
 import java.util.*
 import org.dotenv.vault.dotenvVault
-import org.ktorm.dsl.like
+import org.ktorm.dsl.*
+import org.ktorm.entity.add
 import requiredSearchUserInputField
 import requiredSearchUserLens
 
@@ -27,7 +27,8 @@ fun viewProfile(contexts: RequestContexts):  HttpHandler = { request: Request ->
     val currentUser: User? = contexts[request]["user"]
      if (currentUser != null) {
          val likedAlbums = getLikedAlbums(currentUser)
-         val viewModel = ProfileViewModel(currentUser = currentUser, likedAlbums)
+         val followedUsers = getFollowedUsers(currentUser.id)
+         val viewModel = ProfileViewModel(currentUser, likedAlbums, followedUsers)
          Response(Status.OK)
              .body(templateRenderer(viewModel))
      } else {
@@ -37,11 +38,32 @@ fun viewProfile(contexts: RequestContexts):  HttpHandler = { request: Request ->
 
 fun getLikedAlbums(currentUser: User): List<Album>{
     val likedList = database.sequenceOf(Likes).filter { userId eq currentUser.id }.toList()
-    val likedAlbumsIdList: List<String> =likedList.map { obj ->
+    val likedAlbumsIdList: List<String> = likedList.map { obj ->
         obj.albumId
     }
     return albumList.filter {
         it.id in likedAlbumsIdList }
+}
+
+fun getFollowedUsers(currentUserId: Int): MutableList<User>{
+    //.filter { followerId eq currentUserId }.toList()
+    val followedUsers = mutableListOf<User>()
+    database
+        .from(Followers)
+        .innerJoin(Users, on = Followers.followerId eq Users.id)
+        .select (Users.id, Users.username, Users.email, Users.encryptedPassword, Users.profilePicture )
+        .where (Followers.followerId eq currentUserId)
+        .map { row ->
+                val user = User {
+                    id = row[Users.id]!!
+                    username = row[Users.username].toString()
+                    email = row[Users.email].toString()
+                    encryptedPassword = row[Users.encryptedPassword].toString()
+                    profilePicture = row[Users.profilePicture].toString()
+                }
+                followedUsers.add(user)
+            }
+    return followedUsers
 }
 
 fun updateProfilePicture(contexts: RequestContexts): HttpHandler = {request: Request ->
@@ -93,3 +115,24 @@ fun searchUser(contexts: RequestContexts): HttpHandler = { request: Request ->
     Response(Status.OK).body(templateRenderer(resultsViewModel))
 }
 
+fun followUser(contexts: RequestContexts, request: Request, userId: Int): Response {
+    val currentUser: User? = contexts[request]["user"]
+    if (currentUser != null) {
+        if (!isUserFollowedByUser(currentUser.id, userId)) {
+            val newFollower = Follower {
+                followerId = currentUser.id
+                followedUserId = userId
+            }
+            database.sequenceOf(Followers).add(newFollower)
+        }
+    }
+    return Response(Status.SEE_OTHER)
+        .header("Location", "/profile")
+}
+
+fun isUserFollowedByUser(followerId: Int, followedUserId: Int): Boolean {
+    return database.sequenceOf(Followers)
+        .filter{(it.followerId eq followerId) and (it.followedUserId eq followedUserId)}
+        .toList()
+        .isNotEmpty()
+}
