@@ -2,7 +2,6 @@ package com.belleMusica.handlers
 
 import com.belleMusica.entities.*
 import com.belleMusica.schemas.Followers
-import com.belleMusica.schemas.Followers.followerId
 import com.belleMusica.schemas.Likes
 import com.belleMusica.schemas.Likes.userId
 import com.belleMusica.schemas.Users
@@ -150,7 +149,15 @@ fun isUserFollowedByUser(followerId: Int, followedUserId: Int): Boolean {
 
 fun getProfileWithId(contexts: RequestContexts, request: Request, id: Int): Response {
     val currentUser: User? = contexts[request]["user"]
-    val viewModel = SelectedProfileViewModel(currentUser, getLikedAlbums(id), getFollowedUsers(id))
+    val profileUser = getUserWithId(id)
+    val isFollowed = if(currentUser != null) isUserFollowedByUser(currentUser.id, id) else false
+    val viewModel = SelectedProfileViewModel(currentUser, profileUser, isFollowed, getLikedAlbums(id), getFollowedUsers(id))
     return Response(Status.OK)
         .body(templateRenderer(viewModel))
+}
+
+fun getUserWithId(userId: Int): User {
+    return database.sequenceOf(Users)
+        .filter{it.id eq userId}
+        .toList()[0]
 }

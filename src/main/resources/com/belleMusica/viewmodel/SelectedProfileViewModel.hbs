@@ -2,7 +2,15 @@
     {{#*inline "content"}}
         <div class="wrapper">
                 <div id = "profileCard">
-                    <img id="profilePicture" src="{{currentUser.profilePicture}}" alt="...">
+                    <img id="profilePicture" src="{{profileUser.profilePicture}}" alt="...">
+                    <p>{{profileUser.username}}</p>
+                    <a href="/follow/{{profileUser.id}}">
+                        {{#if isFollowed}}
+                            <button>Unfollow</button>
+                        {{else}}
+                            <button>Follow</button>
+                        {{/if}}
+                    </a>
                 </div>
                  <div id="liked-albums">
                      {{#each likedAlbums}}
