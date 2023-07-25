@@ -50,7 +50,7 @@ fun getFollowedUsers(currentUserId: Int): MutableList<User>{
     val followedUsers = mutableListOf<User>()
     database
         .from(Followers)
-        .innerJoin(Users, on = Followers.followerId eq Users.id)
+        .innerJoin(Users, on = Followers.followedUserId eq Users.id)
         .select (Users.id, Users.username, Users.email, Users.encryptedPassword, Users.profilePicture )
         .where (Followers.followerId eq currentUserId)
         .map { row ->
