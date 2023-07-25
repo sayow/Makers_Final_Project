@@ -2,8 +2,8 @@
     {{#*inline "content"}}
         <script>
             function checkProfilePicture() {
-                let profilePicture = document.getElementById("profile_picture");
-                let submitButton = document.getElementById("submit");
+                let profilePicture = document.getElementById("profilePictureInput");
+                let submitButton = document.getElementById("submit_upload");
                 if (profilePicture.files.length > 0) {
                     submitButton.classList.remove("hidden");
                 }
