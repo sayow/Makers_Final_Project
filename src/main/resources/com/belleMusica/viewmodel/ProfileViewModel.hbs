@@ -8,17 +8,24 @@
                     submitButton.classList.remove("hidden");
                 }
             }
+            function changeProfilePicture() {
+                let modal = document.getElementById("modal")
+                modal.classList.toggle("hidden")
+            }
         </script>
         <div class="wrapper">
-                <div id = "profileCard">
+                <div id = "profileCard" onclick="changeProfilePicture()">
                     <p>Hello {{currentUser.username}}</p>
                     <img id="profilePicture" src="{{currentUser.profilePicture}}" alt="...">
                 </div>
-                <div id="updateProfilePicture">
+                <div  id="modal" class="hidden">
+                <div id="updateProfilePicture" >
+                    <img src="/static/closebtn.svg" onclick="changeProfilePicture()" class="closeBtn">
                     <form method="POST" id="photoForm" enctype=multipart/form-data action="/profile/updateProfilePicture">
                         <input type="file" id="profilePictureInput" name="profile_picture" onchange="checkProfilePicture()"/>
                         <input type="submit" id="submit_upload" class="hidden"/>
                     </form>
+                </div>
                 </div>
                  <div id="liked-albums">
                      {{#each likedAlbums}}

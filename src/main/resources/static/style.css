@@ -34,7 +34,8 @@ nav {
     padding: 23px;
 }
 
-.nav-btn{
+.nav-btn,
+#submit_upload{
     width: 15rem;
     height: 6rem;
     font-size: 2.4rem;
@@ -44,7 +45,8 @@ nav {
     border: none;
 }
 
-.nav-btn:hover{
+.nav-btn:hover,
+#submit_upload{
     background: var(--btn-hover) ;
 }
 
@@ -113,21 +115,25 @@ h1{
     grid-template-areas: "A C D"
     "B C D";
     grid-template-columns: .5fr 2fr 1fr;
-
+    grid-column-gap: 2rem;
+    padding: 2rem;
 }
 
-#profileCard {
-    margin: 2rem 3rem;
+#profileCard,
+#updateProfilePicture{
     background: var(--light-text-color);
-    width: 200px;
-    height: 240px;
+    width: 250px;
+    height: 330px;
     border-radius: 12px;
-    grid-area: A;
     display: flex;
     font-size: 2.4rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+#profileCard{
+    grid-area: A;
 }
 
 #profileCard img{
@@ -140,29 +146,34 @@ h1{
 
 #updateProfilePicture{
     grid-area: B;
-    margin: 2rem 3rem;
-    background: var(--light-text-color);
-    width: 200px;
-    height: 240px;
-    border-radius: 12px;
-    display: flex;
-    font-size: 2.4rem;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
+
+#modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
+}
+
  #liked-albums{
      grid-area: C;
      display: flex;
      flex-wrap: wrap;
      gap: 2rem;
      background: var(--light-text-color);
-     margin: 2rem 1rem 2rem 0;
      border-radius: 12px;
  }
  .friendsList{
      grid-area: D;
-    margin: 2rem 1rem;
     background: var(--light-text-color);
     border-radius: 12px;
     padding: 1rem 2rem;
@@ -256,7 +267,7 @@ h1{
     gap: 2rem;
 }
 
-.foundUserCard .profile_picture {
+.foundUserCard .profile_picture{
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -313,3 +324,5 @@ h1{
     font-size: 2.4rem;
     color: var(--light-text-color);
 }
+
+
