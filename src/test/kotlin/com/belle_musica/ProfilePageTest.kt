@@ -1,50 +1,42 @@
 package com.belle_musica
+
 import com.belleMusica.handlers.dotenv
 import com.belleMusica.schemas.Users
 import database
-import org.http4k.core.*
 import org.junit.jupiter.api.Test
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.By
-import org.openqa.selenium.chrome.ChromeDriver
 import org.junit.jupiter.api.TestInstance
 import org.ktorm.dsl.deleteAll
+import org.openqa.selenium.By
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 
-
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
-class AlbumsPageTest {
+class ProfilePageTest {
 
     private lateinit var driver: WebDriver
 
-
     @Test
-    fun `Test like album`() {
+    fun `Test user's liked album appears on profile page`() {
         setupAutoUser()
         likeAnAlbum()
-        val albumElements = driver.findElements(By.className("album"))
-        val firstElement = albumElements[0].text
+        val clickOnProfileButton = driver.findElement(By.id("profile_picture")).click()
+        val likedAlbumElements = driver.findElements(By.className("album"))
+        val firstElement = likedAlbumElements[0].text
         assert(firstElement.contains(">Music"))
         driverShutDown()
     }
-
-
     @Test
-    fun `Test logout and check rendering the most popular albums`() {
+    fun `Test upload profile picture and check if displayed`() {
         setupAutoUser()
-        likeAnAlbum()
-        val logoutButton = driver.findElement(By.id("signout")).click()
-        val albumElements = driver.findElements(By.className("likedAlbumCard"))
-        val firstElement = albumElements[0].text
-        assert(firstElement.contains(">Music"))
-        driverShutDown()
+        val clickOnProfileButton = driver.findElement(By.id("profile_picture")).click()
+        val fileInput = driver.findElement(By.id("profilePictureInput"))
+        val filePath = dotenv["TEST_PHOTO"]
+        fileInput.sendKeys(filePath)
+        driver.findElement(By.id("photoForm")).submit()
+        val uploadedImage = driver.findElement(By.id("profilePicture"))
+        assert(uploadedImage.isDisplayed)
     }
-
-
-    fun likeAnAlbum(){
-        val likeButton = driver.findElement(By.id("likeButton>Music")).click()
-    }
-
 
     fun setupAutoUser() {
         database.deleteAll(Users)
@@ -63,8 +55,12 @@ class AlbumsPageTest {
         val submitLogin = driver.findElement(By.id("submit")).click()
     }
 
+    fun likeAnAlbum(){
+        val likeButton = driver.findElement(By.id("likeButton>Music")).click()
+    }
+
     fun driverShutDown(){
         driver.quit()
     }
-}
 
+}
