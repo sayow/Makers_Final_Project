@@ -39,7 +39,7 @@ fun createSessionHandler(): HttpHandler = { request: Request ->
         Response(Status.BAD_REQUEST).header("Location", "/sessions/new")
         Response(Status.BAD_REQUEST).body(templateRenderer(viewModel))
     } else {
-        getSpotifyAlbums()
+        getSpotifyAlbums(user)
         injectSessionCookie(
             Response(Status.FOUND).header("Location", "/albums"),
             user
