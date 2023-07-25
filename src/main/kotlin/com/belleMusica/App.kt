@@ -103,7 +103,7 @@ fun app(contexts: RequestContexts) = routes(
     "follow/{id}" bind Method.GET to {request: Request ->
         val idParamLens = Path.string().of ( "id")
         val userId = idParamLens(request).toInt()
-        followUser(contexts, request, userId)
+        toggleFollowUser(contexts, request, userId)
     }
 )
 fun failResponse (failure: LensFailure) =

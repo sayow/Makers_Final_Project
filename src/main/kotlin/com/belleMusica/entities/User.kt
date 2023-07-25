@@ -10,4 +10,5 @@ interface User : Entity<User> {
     var email: String
     var encryptedPassword: String
     var profilePicture: String
+    var isFollowed: Boolean?
 }
