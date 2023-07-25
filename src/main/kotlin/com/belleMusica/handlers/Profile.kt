@@ -2,12 +2,12 @@ package com.belleMusica.handlers
 
 import com.belleMusica.entities.*
 import com.belleMusica.schemas.Followers
-import com.belleMusica.schemas.Followers.followerId
 import com.belleMusica.schemas.Likes
 import com.belleMusica.schemas.Likes.userId
 import com.belleMusica.schemas.Users
 import com.belleMusica.viewmodel.ProfileViewModel
 import com.belleMusica.viewmodel.SearchUserResultsViewModel
+import com.belleMusica.viewmodel.SelectedProfileViewModel
 import database
 import org.http4k.core.*
 import templateRenderer
@@ -24,7 +24,7 @@ val dotenv = dotenvVault()
 fun viewProfile(contexts: RequestContexts):  HttpHandler = { request: Request ->
     val currentUser: User? = contexts[request]["user"]
      if (currentUser != null) {
-         val likedAlbums = getLikedAlbums(currentUser)
+         val likedAlbums = getLikedAlbums(currentUser.id)
          val followedUsers = getFollowedUsers(currentUser.id)
          val viewModel = ProfileViewModel(currentUser, likedAlbums, followedUsers)
          Response(Status.OK)
@@ -34,8 +34,8 @@ fun viewProfile(contexts: RequestContexts):  HttpHandler = { request: Request ->
      }
 }
 
-fun getLikedAlbums(currentUser: User): List<Album>{
-    val likedList = database.sequenceOf(Likes).filter { userId eq currentUser.id }.toList()
+fun getLikedAlbums(currentUserId: Int): List<Album>{
+    val likedList = database.sequenceOf(Likes).filter { userId eq currentUserId }.toList()
     val likedAlbumsIdList: List<String> = likedList.map { obj ->
         obj.albumId
     }
@@ -145,4 +145,19 @@ fun isUserFollowedByUser(followerId: Int, followedUserId: Int): Boolean {
         .filter{(it.followerId eq followerId) and (it.followedUserId eq followedUserId)}
         .toList()
         .isNotEmpty()
+}
+
+fun getProfileWithId(contexts: RequestContexts, request: Request, id: Int): Response {
+    val currentUser: User? = contexts[request]["user"]
+    val profileUser = getUserWithId(id)
+    val isFollowed = if(currentUser != null) isUserFollowedByUser(currentUser.id, id) else false
+    val viewModel = SelectedProfileViewModel(currentUser, profileUser, isFollowed, getLikedAlbums(id), getFollowedUsers(id))
+    return Response(Status.OK)
+        .body(templateRenderer(viewModel))
+}
+
+fun getUserWithId(userId: Int): User {
+    return database.sequenceOf(Users)
+        .filter{it.id eq userId}
+        .toList()[0]
 }

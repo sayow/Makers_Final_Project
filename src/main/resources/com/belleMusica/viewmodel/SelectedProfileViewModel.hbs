@@ -1,0 +1,36 @@
+{{#> layout}}
+    {{#*inline "content"}}
+        <div class="wrapper">
+                <div id = "profileCard">
+                    <img id="profilePicture" src="{{profileUser.profilePicture}}" alt="...">
+                    <p>{{profileUser.username}}</p>
+                    <a href="/follow/{{profileUser.id}}">
+                        {{#if isFollowed}}
+                            <button>Unfollow</button>
+                        {{else}}
+                            <button>Follow</button>
+                        {{/if}}
+                    </a>
+                </div>
+                 <div id="liked-albums">
+                     {{#each likedAlbums}}
+                         <div class="album">
+                             <img src="{{imageUrl}}" alt="Album's photo"/>
+                             <p>{{artistName}}</p>
+                             <p>{{albumName}}</p>
+                         </div>
+                     {{/each}}
+                 </div>
+            <div class="friendsList">
+                <h2>Following</h2>
+                {{#each followedUsers}}
+                    <div class="followedUsers">
+                        <img class="profile_picture" src="{{profilePicture}}">
+                        <p class="username"> {{username}}</p>
+                        <p class="email">{{email}}</p>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    {{/inline}}
+{{/layout}}

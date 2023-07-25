@@ -97,7 +97,12 @@ fun app(contexts: RequestContexts) = routes(
     },
     "/profile" bind routes(
         "/" bind Method.GET to checkAuthenticated(contexts).then(viewProfile(contexts)),
-        "/updateProfilePicture" bind Method.POST to checkAuthenticated(contexts).then(updateProfilePicture(contexts))
+        "/updateProfilePicture" bind Method.POST to checkAuthenticated(contexts).then(updateProfilePicture(contexts)),
+        "/{id}" bind Method.GET to checkAuthenticated(contexts).then{request: Request ->
+            val idParamLens = Path.string().of ( "id")
+            val id = idParamLens(request).toInt()
+            getProfileWithId(contexts, request, id)
+        }
     ),
     "/searchUser" bind Method.POST to checkAuthenticated(contexts).then(searchUser(contexts)),
     "follow/{id}" bind Method.GET to {request: Request ->
