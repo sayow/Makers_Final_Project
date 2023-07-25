@@ -22,7 +22,7 @@
     {{# if currentUser}}
         <div id="right">
             <p>@{{currentUser.username}}</p>
-            <a href="/profile" title="My Account">
+            <a id="profile_picture" href="/profile" title="My Account">
                 <img src="{{currentUser.profilePicture}}" alt="...">
             </a>
             <a href="/sessions/clear">
@@ -32,10 +32,10 @@
     {{else}}
         <div id="right">
             <a href="/sessions/new">
-                <button class="nav-btn">Login</button>
+                <button id="login-btn" class="nav-btn">Login</button>
             </a>
             <a href="/users/new">
-                <button class="nav-btn">Sign-up</button>
+                <button id="register-btn" class="nav-btn">Sign-up</button>
             </a>
         </div>
     {{/if}}
