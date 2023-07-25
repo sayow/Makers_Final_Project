@@ -3,7 +3,7 @@
         <div class="wrapper">
                 <div id = "profileCard">
                     <img id="profilePicture" src="{{profileUser.profilePicture}}" alt="...">
-                    <p>{{profileUser.username}}</p>
+                    <p class="visitedUserName">{{profileUser.username}}</p>
                     <a href="/follow/{{profileUser.id}}">
                         {{#if isFollowed}}
                             <button>Unfollow</button>
@@ -26,7 +26,7 @@
                 {{#each followedUsers}}
                     <div class="followedUsers">
                         <img class="profile_picture" src="{{profilePicture}}">
-                        <p class="username"> {{username}}</p>
+                        <p  class="username"> {{username}}</p>
                         <p class="email">{{email}}</p>
                     </div>
                 {{/each}}
