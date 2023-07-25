@@ -12,12 +12,12 @@
         <div class="wrapper">
                 <div id = "profileCard">
                     <p>Hello {{currentUser.username}}</p>
-                    <img src="{{currentUser.profilePicture}}" alt="...">
+                    <img id="profilePicture" src="{{currentUser.profilePicture}}" alt="...">
                 </div>
                 <div id="updateProfilePicture">
-                    <form method="POST" enctype=multipart/form-data action="/profile/updateProfilePicture">
-                        <input type="file" id="profile_picture" name="profile_picture" onchange="checkProfilePicture()"/>
-                        <input type="submit" id="submit" class="hidden"/>
+                    <form method="POST" id="photoForm" enctype=multipart/form-data action="/profile/updateProfilePicture">
+                        <input type="file" id="profilePictureInput" name="profile_picture" onchange="checkProfilePicture()"/>
+                        <input type="submit" id="submit_upload" class="hidden"/>
                     </form>
                 </div>
                  <div id="liked-albums">
