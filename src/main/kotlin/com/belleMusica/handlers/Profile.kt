@@ -9,15 +9,12 @@ import com.belleMusica.viewmodel.ProfileViewModel
 import com.belleMusica.viewmodel.SearchUserResultsViewModel
 import database
 import org.http4k.core.*
-import org.ktorm.entity.filter
-import org.ktorm.entity.sequenceOf
-import org.ktorm.entity.toList
 import templateRenderer
 import java.io.File
 import java.util.*
 import org.dotenv.vault.dotenvVault
 import org.ktorm.dsl.*
-import org.ktorm.entity.add
+import org.ktorm.entity.*
 import requiredSearchUserInputField
 import requiredSearchUserLens
 
@@ -108,10 +105,12 @@ fun searchUser(contexts: RequestContexts): HttpHandler = { request: Request ->
     val currentUser: User? = contexts[request]["user"]
     val searchUserForm = requiredSearchUserLens(request)
     val searchUserInput = requiredSearchUserInputField(searchUserForm)
-    val users = database.sequenceOf(Users).filter { it.username like "%$searchUserInput%" }.toList()
-    println(users)
+    val users = database.sequenceOf(Users).filter { it.username like "%$searchUserInput%" }.toMutableList()
+    val filterUserList = if (currentUser != null) {
+        users.filter { it.id != currentUser.id }
+    } else listOf<User>()
     val message = if(users.isEmpty()) "No user was matching with your search" else null
-    val resultsViewModel = SearchUserResultsViewModel(currentUser, users, message)
+    val resultsViewModel = SearchUserResultsViewModel(currentUser, filterUserList, message)
     Response(Status.OK).body(templateRenderer(resultsViewModel))
 }
 
