@@ -120,6 +120,20 @@ fun unlikeAlbumOnProfile(contexts: RequestContexts, request: Request, albumId: S
         .header("Location", "/profile")
 }
 
+fun toggleLikeOnSelectedProfile(contexts: RequestContexts, request: Request, albumId: String, userId: Int): Response {
+    val currentUser: User? = contexts[request]["user"]
+    if (currentUser != null) {
+        if (!isAlbumLikedByUser(albumId, currentUser.id)) {
+            likeAlbum(currentUser, albumId)
+        } else {
+            unlikeAlbum(currentUser, albumId)
+        }
+    }
+    return Response(Status.SEE_OTHER)
+        .header("Location", "/$userId")
+        .body("")
+}
+
 fun getNumberLikesAlbum(albumId: String): Int {
     return  database.sequenceOf(Likes)
         .filter{it.albumId eq albumId}

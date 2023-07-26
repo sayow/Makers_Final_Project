@@ -116,12 +116,18 @@ h1{
 .followedUsers p{
     font-size: 1.6rem;
 }
+.album img{
+    border-radius: 12px;
+}
+
+.followedUsers img {
+    border-radius: 50%;
+}
 
 .album img,
 .followedUsers img{
     object-fit: contain;
     max-width: 13rem;
-    border-radius: 12px;
 }
 
 .likeBTN {
