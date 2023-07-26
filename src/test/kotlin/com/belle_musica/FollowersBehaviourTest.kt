@@ -73,8 +73,5 @@ class FollowersBehaviourTest {
         val submitLogin = driver.findElement(By.id("submit")).click()
     }
 
-    fun driverShutDown(){
-        driver.quit()
-    }
 
 }
