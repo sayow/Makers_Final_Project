@@ -36,8 +36,7 @@ class RegisterUserTest {
 
     @Test
     fun `Successfully created a new user`() {
-
-        setupUser()
+        setupUser("mail@mail2.com","Password@123","Sara")
         val ourUser = database.sequenceOf(Users)
             .filter { it.email eq "mail@mail2.com" }
             .firstOrNull()
@@ -48,23 +47,16 @@ class RegisterUserTest {
 
     @Test
     fun `User Not created because of incorrect email`() {
-        val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail")
-        val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("Password@123")
-        val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Sara")
-        val submit = driver.findElement(By.id("submitbutton")).click()
+        setupUser("mail","Password@123","Sara")
         val resultPageText = driver.findElement(By.tagName("body")).text
         assert(resultPageText.contains("The email is incorrect, choose a valid email."))
     }
 
     @Test
     fun `User Not created because of existing email`() {
-        setupUser()
+        setupUser("mail1@mail2.com","Password@123","Sara")
         val registerButton = driver.findElement(By.id("register-btn")).click()
-
-        val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail@mail2.com")
-        val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("Password@123")
-        val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Sara")
-        val submit = driver.findElement(By.id("submitbutton")).click()
+        setupUser("mail1@mail2.com","Password@123","Sara")
         val ourUser = database.sequenceOf(Users).toList().size
         assert(ourUser == 1)
         val resultPageText = driver.findElement(By.tagName("body")).text
@@ -73,10 +65,7 @@ class RegisterUserTest {
 
     @Test
     fun `User Not created because of incorrect password`() {
-        val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail1@mail2.com")
-        val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("123")
-        val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Sara")
-        val submit = driver.findElement(By.id("submitbutton")).click()
+        setupUser("mail1@mail2.com","123","Sara")
         val ourUser = database.sequenceOf(Users).toList().size
         assert(ourUser == 0)
         val resultPageText = driver.findElement(By.tagName("body")).text
@@ -85,22 +74,18 @@ class RegisterUserTest {
 
     @Test
     fun `User Not created because of existing username`() {
-        setupUser()
+        setupUser("mail1@mail2.com","Password@123","Sara")
         val registerButton = driver.findElement(By.id("register-btn")).click()
-
-        val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail1@mail2.com")
-        val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("Password@123")
-        val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Sara")
-        val submit = driver.findElement(By.id("submitbutton")).click()
+        setupUser("mail1@mail3.com","Password@123","Sara")
         val resultPageText = driver.findElement(By.tagName("body")).text
         assert(resultPageText.contains("The user already exists, choose another username."))
 
     }
-    fun setupUser(){
+    fun setupUser(userMail: String,userPass: String, userUsername: String ){
         val registerButton = driver.findElement(By.id("register-btn")).click()
-        val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail@mail2.com")
-        val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("Password@123")
-        val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Sara")
+        val email: Unit = driver.findElement(By.id("emailinput")).sendKeys(userMail)
+        val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys(userPass)
+        val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys(userUsername)
         val submit = driver.findElement(By.id("submitbutton")).click()
     }
 

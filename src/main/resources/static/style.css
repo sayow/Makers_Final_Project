@@ -94,6 +94,22 @@ h1{
     width: 15rem;
     height: 22rem;
 }
+
+.friendsList .followedUsers button{
+    background: var(--highlight-color);
+    border: none;
+    width: 10rem;
+    height: 3rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--light-text-color);
+    font-size: 15px;
+}
+.friendsList .followedUsers button:hover{
+    background: var(--btn-hover);
+}
+
 .album {
     position: relative;
     width: 17rem;
@@ -105,12 +121,18 @@ h1{
 .followedUsers p{
     font-size: 1.6rem;
 }
+.album img{
+    border-radius: 12px;
+}
+
+.followedUsers img {
+    border-radius: 50%;
+}
 
 .album img,
 .followedUsers img{
     object-fit: contain;
     max-width: 13rem;
-    border-radius: 12px;
 }
 
 .likeBTN {
@@ -164,6 +186,21 @@ h1{
     margin-bottom: 1rem;
 }
 
+#profileCard button{
+    background: var(--highlight-color);
+    border: none;
+    width: 10rem;
+    height: 3rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--light-text-color);
+    font-size: 15px;
+}
+#profileCard button:hover{
+    background: var(--btn-hover);
+}
+
 #profileCard img{
     width: 200px;
     height: 200px;
@@ -174,6 +211,7 @@ h1{
 }
 #hoverEffect{
     position: relative;
+    cursor: pointer;
 }
 
 #hoverEffect:hover #profilePicture{
@@ -244,10 +282,15 @@ h1{
     background: var(--light-text-color);
     border-radius: 12px;
     padding: 1rem 2rem;
+     text-align: center;
 }
  .friendsList form{
      display: flex;
  }
+ .friendsList h2{
+     font-size: 2.4rem;
+ }
+ 
  .friendsList button#SearchBtn{
      width: 36px;
      border-radius: 0 12px 12px 0;
@@ -299,23 +342,29 @@ h1{
     display: grid;
     grid-template-areas: "A B B"
     "A C C";
+    align-items: center;
+    justify-content: start;
+    gap: 2rem;
 }
 
-.likedAlbumCard.albumPhoto{
+.likedAlbumCard .albumPhoto{
     grid-area: A;
 }
-.likedAlbumCard.albumName{
+.likedAlbumCard p {
+    font-size: 1.4rem;
+}
+.likedAlbumCard .albumName{
     grid-area: B;
 }
 
-.likedAlbumCard.artistName{
+.likedAlbumCard .artistName{
     grid-area: C;
 }
 
 .container img {
     width: 60px;
 }
-.usersFound {
+.usersFound{
     height: 100vh;
     width: 80vw;
     margin: auto;
@@ -332,6 +381,7 @@ h1{
     align-items: center;
     justify-content: center;
     gap: 2rem;
+    margin: 5px;
 }
 
 .foundUserCard .profile_picture_search{
@@ -340,6 +390,10 @@ h1{
     border-radius: 50%;
     object-fit: contain;
     border: 2px solid var(--highlight-color);
+}
+
+.foundUserCard p{
+    font-size: 13.5px;
 }
 
 .foundUserCard .userNameAdEmail button{
@@ -351,6 +405,7 @@ h1{
     border-radius: 8px;
     cursor: pointer;
     color: var(--light-text-color);
+    font-size: 15px;
 }
 .foundUserCard .userNameAdEmail button:hover{
     background: var(--btn-hover);

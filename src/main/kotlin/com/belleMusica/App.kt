@@ -74,7 +74,7 @@ fun authenticateRequestFromSession(contexts: RequestContexts) = Filter { next ->
 }
 
 fun app(contexts: RequestContexts) = routes(
-    "/" bind Method.GET to getLandingPage(),
+    "/" bind Method.GET to getLandingPage(contexts),
     "/users" bind routes(
         "/new" bind Method.GET to newUserHandler(),
         "/" bind Method.POST to ServerFilters.CatchLensFailure(::signupFailResponse).then(createUserHandler())
@@ -93,7 +93,7 @@ fun app(contexts: RequestContexts) = routes(
     "/like/{id}" bind Method.GET to {request: Request ->
         val idParamLens = Path.string().of ( "id")
         val id = idParamLens(request)
-        likeAlbum(contexts, request, id)
+        toggleLikeOnAlbumPage(contexts, request, id)
     },
     "/profile" bind routes(
         "/" bind Method.GET to checkAuthenticated(contexts).then(viewProfile(contexts)),
@@ -104,6 +104,13 @@ fun app(contexts: RequestContexts) = routes(
             unlikeAlbumOnProfile(contexts, request, id)
         }
     ),
+    "/likeOnSelectedProfile/{id}/{userId}" bind Method.GET to { request: Request ->
+        val idParamLens = Path.string().of("id")
+        val id = idParamLens(request)
+        val userIdParamLens = Path.string().of("userId")
+        val userId = userIdParamLens(request).toInt()
+        toggleLikeOnSelectedProfile(contexts, request, id, userId)
+    },
     "/{id}" bind Method.GET to checkAuthenticated(contexts).then{request: Request ->
         val idParamLens = Path.string().of ( "id")
         val id = idParamLens(request).toInt()
