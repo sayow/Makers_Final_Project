@@ -25,7 +25,7 @@ nav {
     background: var(--nav-bar-bg);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 2;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -51,7 +51,8 @@ nav {
     background: var(--btn-hover) ;
 }
 
-#right{
+#right,
+#left{
     display: flex;
     gap: 4.5rem;
     align-items: center;
@@ -198,7 +199,7 @@ h1{
     justify-content: center;
     align-items: center;
     position: fixed;
-    z-index: 1;
+    z-index: 3;
     padding-top: 100px;
     left: 0;
     top: 0;
