@@ -93,7 +93,7 @@ fun app(contexts: RequestContexts) = routes(
     "/like/{id}" bind Method.GET to {request: Request ->
         val idParamLens = Path.string().of ( "id")
         val id = idParamLens(request)
-        likeAlbum(contexts, request, id)
+        toggleLikeOnAlbumPage(contexts, request, id)
     },
     "/profile" bind routes(
         "/" bind Method.GET to checkAuthenticated(contexts).then(viewProfile(contexts)),
