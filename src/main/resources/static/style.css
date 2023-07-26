@@ -34,7 +34,8 @@ nav {
     padding: 23px;
 }
 
-.nav-btn{
+.nav-btn,
+#submit_upload{
     width: 15rem;
     height: 6rem;
     font-size: 2.4rem;
@@ -44,7 +45,8 @@ nav {
     border: none;
 }
 
-.nav-btn:hover{
+.nav-btn:hover,
+#submit_upload{
     background: var(--btn-hover) ;
 }
 
@@ -72,25 +74,43 @@ h1{
     justify-content: space-between;
     gap: 2rem;
 }
-.album{
-    width: 15rem;
-    height: 22rem;
+.album,
+.followedUsers{
     display: flex;
     flex-direction: column;
     align-items: center;
     background: var(--light-text-color);
     border-radius: 12px;
     padding: 1.6rem 1rem;
+}
+.followedUsers{
+    width: 15rem;
+    height: 22rem;
+}
+.album {
+    position: relative;
+    z-index: -1;
+    width: 17rem;
+    height: 27rem;
 
 }
-.album p{
+
+.album p,
+.followedUsers p{
     font-size: 1.6rem;
 }
 
-.album img {
+.album img,
+.followedUsers img{
     object-fit: contain;
     max-width: 13rem;
     border-radius: 12px;
+}
+
+.likeBTN {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
 }
 
 #right p{
@@ -103,7 +123,7 @@ h1{
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 
@@ -113,56 +133,108 @@ h1{
     grid-template-areas: "A C D"
     "B C D";
     grid-template-columns: .5fr 2fr 1fr;
-
+    grid-column-gap: 2rem;
+    padding: 2rem;
 }
 
-#profileCard {
-    margin: 2rem 3rem;
+#profileCard,
+#updateProfilePicture{
     background: var(--light-text-color);
-    width: 200px;
-    height: 240px;
+    height: 330px;
     border-radius: 12px;
-    grid-area: A;
     display: flex;
     font-size: 2.4rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+#profileCard{
+    grid-area: A;
+    width: 250px;
+}
+#profileCard p {
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
 }
 
 #profileCard img{
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    object-fit: contain;
+    object-fit: cover;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+#hoverEffect{
+    position: relative;
+}
+
+#hoverEffect:hover #profilePicture{
+    opacity: 0.3;
+}
+
+.overImgText{
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#hoverEffect:hover .overImgText{
+    opacity: 1;
 }
 
 
 #updateProfilePicture{
     grid-area: B;
-    margin: 2rem 3rem;
-    background: var(--light-text-color);
-    width: 200px;
-    height: 240px;
-    border-radius: 12px;
+    width: 900px;
+}
+
+#modal {
     display: flex;
-    font-size: 2.4rem;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
+}
+
+#photoForm {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
+
+#profilePictureInput{
+    font-size: 2.4rem;
+}
+
+.closeBtn{
+    position: absolute;
+    top: 15px;
+    right: 35px;
+}
+
  #liked-albums{
      grid-area: C;
      display: flex;
      flex-wrap: wrap;
      gap: 2rem;
      background: var(--light-text-color);
-     margin: 2rem 1rem 2rem 0;
      border-radius: 12px;
  }
  .friendsList{
      grid-area: D;
-    margin: 2rem 1rem;
     background: var(--light-text-color);
     border-radius: 12px;
     padding: 1rem 2rem;
@@ -256,7 +328,7 @@ h1{
     gap: 2rem;
 }
 
-.foundUserCard .profile_picture {
+.foundUserCard .profile_picture_search{
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -313,3 +385,4 @@ h1{
     font-size: 2.4rem;
     color: var(--light-text-color);
 }
+
