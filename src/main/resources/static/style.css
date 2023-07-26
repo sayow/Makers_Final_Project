@@ -169,6 +169,7 @@ h1{
 }
 #hoverEffect{
     position: relative;
+    cursor: pointer;
 }
 
 #hoverEffect:hover #profilePicture{
@@ -239,10 +240,15 @@ h1{
     background: var(--light-text-color);
     border-radius: 12px;
     padding: 1rem 2rem;
+     text-align: center;
 }
  .friendsList form{
      display: flex;
  }
+ .friendsList h2{
+     font-size: 2.4rem;
+ }
+ 
  .friendsList button#SearchBtn{
      width: 36px;
      border-radius: 0 12px 12px 0;
@@ -294,16 +300,22 @@ h1{
     display: grid;
     grid-template-areas: "A B B"
     "A C C";
+    align-items: center;
+    justify-content: start;
+    gap: 2rem;
 }
 
-.likedAlbumCard.albumPhoto{
+.likedAlbumCard .albumPhoto{
     grid-area: A;
 }
-.likedAlbumCard.albumName{
+.likedAlbumCard p {
+    font-size: 1.4rem;
+}
+.likedAlbumCard .albumName{
     grid-area: B;
 }
 
-.likedAlbumCard.artistName{
+.likedAlbumCard .artistName{
     grid-area: C;
 }
 

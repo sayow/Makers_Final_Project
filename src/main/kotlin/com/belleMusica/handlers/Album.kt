@@ -72,51 +72,49 @@ fun usernameView(contexts: RequestContexts):  HttpHandler = { request: Request -
     Response(Status.OK)
         .body(templateRenderer(viewModel))
 }
-
-fun likeAlbum(contexts: RequestContexts, request: Request, likedAlbumId: String): Response {
-    val currentUser: User? = contexts[request]["user"]
-    if (currentUser != null) {
-        if (!isAlbumLikedByUser(likedAlbumId, currentUser.id)) {
-            val newLike = Like {
-                userId = currentUser.id
-                albumId = likedAlbumId
-            }
-            albumList.forEach() {
-                if (it.id == likedAlbumId) {
-                    it.numberLikes += 1
-                    it.isLikedByCurrentUser = true
-                }
-            }
-            database.sequenceOf(Likes).add(newLike)
-        } else {
-            database.delete(Likes) { like ->
-                (currentUser.id eq like.userId) and (likedAlbumId eq like.albumId)
-            }
-            albumList.forEach() {
-                if (it.id == likedAlbumId) {
-                    it.numberLikes -= 1
-                    it.isLikedByCurrentUser = false
-                }
-            }
+fun likeAlbum(currentUser: User, likedAlbumId: String){
+    val newLike = Like {
+        userId = currentUser.id
+        albumId = likedAlbumId
+    }
+    albumList.forEach() {
+        if (it.id == likedAlbumId) {
+            it.numberLikes += 1
+            it.isLikedByCurrentUser = true
         }
     }
+    database.sequenceOf(Likes).add(newLike)
+}
+
+fun unlikeAlbum(currentUser: User, unlikedAlbumId: String) {
+    database.delete(Likes) { like ->
+        (currentUser.id eq like.userId) and (unlikedAlbumId eq like.albumId)
+    }
+    albumList.forEach() {
+        if (it.id == unlikedAlbumId) {
+            it.numberLikes -= 1
+            it.isLikedByCurrentUser = false
+        }
+    }
+}
+fun toggleLikeOnAlbumPage(contexts: RequestContexts, request: Request, albumId: String): Response {
+    val currentUser: User? = contexts[request]["user"]
+    if (currentUser != null) {
+        if (!isAlbumLikedByUser(albumId, currentUser.id)) {
+            likeAlbum(currentUser, albumId)
+        } else {
+            unlikeAlbum(currentUser, albumId)
+            }
+        }
     return Response(Status.SEE_OTHER)
         .header("Location", "/albums")
         .body("")
 }
 
-fun unlikeAlbumOnProfile(contexts: RequestContexts, request: Request, likedAlbumId: String): Response {
+fun unlikeAlbumOnProfile(contexts: RequestContexts, request: Request, albumId: String): Response {
     val currentUser: User? = contexts[request]["user"]
     if( currentUser != null) {
-        database.delete(Likes) { like ->
-            (currentUser.id eq like.userId) and (likedAlbumId eq like.albumId)
-        }
-        albumList.forEach() {
-            if (it.id == likedAlbumId) {
-                it.numberLikes -= 1
-                it.isLikedByCurrentUser = false
-            }
-        }
+        unlikeAlbum(currentUser, albumId)
     }
     return Response(Status.SEE_OTHER)
         .header("Location", "/profile")
