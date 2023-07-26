@@ -2,16 +2,21 @@
     {{#*inline "content"}}
         <div class="error" style="color:#FF0000">{{error}}</div>
         <div class="cardLogin">
-            <form action="/sessions" method="POST">
+            <form action="/sessions" method="POST" onsubmit="return validateForm()">
                 <input type="text" id="email" name="email" placeholder="email@email.com">
                 <div style="height:40px;">
                     <input style=" width: 100%"  type="password" id="password" name="password" placeholder="password">
                     <i class="fas  fa-eye-slash" id="togglePassword" style="transform: translate(2100%, -185%);font-size: 15px; cursor: pointer;"></i>
                 </div>
+                {{#if error}}
+                    <div class="g-recaptcha" data-sitekey="6Ldiz1YnAAAAAClUCZrfusMYQ7EZFFwXBT3sIwhi" ></div>
+                {{/if}}
 
                 <input type="submit" id="submit" name="submit">
             </form>
         </div>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 
         <script>
             const togglePassword = document.querySelector('#togglePassword');
@@ -34,6 +39,16 @@
                     togglePassword.style.transform = 'translate(2351%, -185%)';
                 }
             });
+        </script>
+        <script>
+            function validateForm() {
+                var response = grecaptcha.getResponse();
+                if (response.length === 0) {
+                    alert("Please complete the reCAPTCHA.");
+                    return false;
+                }
+                return true;
+            }
         </script>
 
     {{/inline}}
