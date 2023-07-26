@@ -56,7 +56,7 @@ class FollowersBehaviourTest {
         val chromeOptions = ChromeOptions()
         chromeOptions.addArguments("--headless")
         chromeOptions.addArguments("--disable-gpu")
-        driver = ChromeDriver()
+        driver = ChromeDriver(chromeOptions)
         driver.get("http://localhost:9999/")
     }
     fun setupAutoUser(emailInput: String, passwordInput: String, usernameInput: String ) {
@@ -71,10 +71,6 @@ class FollowersBehaviourTest {
         val emailLogin: Unit = driver.findElement(By.id("email")).sendKeys(emailInput)
         val passwordLogin: Unit = driver.findElement(By.id("password")).sendKeys(passwordInput)
         val submitLogin = driver.findElement(By.id("submit")).click()
-    }
-
-    fun likeAnAlbum(){
-        val likeButton = driver.findElement(By.id("likeButton>Music")).click()
     }
 
     fun driverShutDown(){
