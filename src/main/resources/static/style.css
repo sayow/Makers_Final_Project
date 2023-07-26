@@ -400,7 +400,6 @@ footer{
     text-align: center;
     background: #e2d90d2b;
     bottom: 0;
-    position: absolute;
     display: flex;
     flex-direction: row;
     align-items: center;
