@@ -105,6 +105,23 @@ fun likeAlbum(contexts: RequestContexts, request: Request, likedAlbumId: String)
         .body("")
 }
 
+fun unlikeAlbumOnProfile(contexts: RequestContexts, request: Request, likedAlbumId: String): Response {
+    val currentUser: User? = contexts[request]["user"]
+    if( currentUser != null) {
+        database.delete(Likes) { like ->
+            (currentUser.id eq like.userId) and (likedAlbumId eq like.albumId)
+        }
+        albumList.forEach() {
+            if (it.id == likedAlbumId) {
+                it.numberLikes -= 1
+                it.isLikedByCurrentUser = false
+            }
+        }
+    }
+    return Response(Status.SEE_OTHER)
+        .header("Location", "/profile")
+}
+
 fun getNumberLikesAlbum(albumId: String): Int {
     return  database.sequenceOf(Likes)
         .filter{it.albumId eq albumId}

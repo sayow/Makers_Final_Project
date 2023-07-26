@@ -97,7 +97,12 @@ fun app(contexts: RequestContexts) = routes(
     },
     "/profile" bind routes(
         "/" bind Method.GET to checkAuthenticated(contexts).then(viewProfile(contexts)),
-        "/updateProfilePicture" bind Method.POST to checkAuthenticated(contexts).then(updateProfilePicture(contexts))
+        "/updateProfilePicture" bind Method.POST to checkAuthenticated(contexts).then(updateProfilePicture(contexts)),
+        "/unlike/{id}" bind Method.GET to { request: Request ->
+            val idParamLens = Path.string().of("id")
+            val id = idParamLens(request)
+            unlikeAlbumOnProfile(contexts, request, id)
+        }
     ),
     "/{id}" bind Method.GET to checkAuthenticated(contexts).then{request: Request ->
         val idParamLens = Path.string().of ( "id")
