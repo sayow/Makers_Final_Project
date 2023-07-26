@@ -17,15 +17,19 @@ class ProfilePageTest {
     private lateinit var driver: WebDriver
 
     @Test
-    fun `Test user's liked album appears on profile page`() {
+    fun `Test user's liked album appears on profile page then unlike`() {
         setupAutoUser()
         likeAnAlbum()
         val clickOnProfileButton = driver.findElement(By.id("profile_picture")).click()
         val likedAlbumElements = driver.findElements(By.className("album"))
         val firstElement = likedAlbumElements[0].text
         assert(firstElement.contains(">Music"))
+        unlikeAnAlbum()
+        val likedAlbums =driver.findElement(By.id("liked-albums")).text
+        assert(likedAlbums=="")
         driverShutDown()
     }
+
     @Test
     fun `Test upload profile picture and check if displayed`() {
         setupAutoUser()
@@ -57,6 +61,9 @@ class ProfilePageTest {
 
     fun likeAnAlbum(){
         val likeButton = driver.findElement(By.id("likeButton>Music")).click()
+    }
+    fun unlikeAnAlbum(){
+        val likeButton = driver.findElement(By.id("unlikeButton>Music")).click()
     }
 
     fun driverShutDown(){
