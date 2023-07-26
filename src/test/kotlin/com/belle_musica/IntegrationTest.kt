@@ -52,27 +52,6 @@ class IntegrationTest {
 
 
 
-    fun setupAutoUser() {
-        database.deleteAll(Users)
-        val chromeOptions = ChromeOptions()
-        chromeOptions.addArguments("--headless")
-        chromeOptions.addArguments("--disable-gpu")
-        driver = ChromeDriver(chromeOptions)
-        driver.get("http://localhost:9999/")
-        val registerButton = driver.findElement(By.id("register-btn")).click()
-        val email: Unit = driver.findElement(By.id("emailinput")).sendKeys("mail@mail2.com")
-        val password: Unit = driver.findElement(By.id("passwordinput")).sendKeys("Password@123")
-        val username: Unit = driver.findElement(By.id("usernameinput")).sendKeys("Sara")
-        val submit = driver.findElement(By.id("submitbutton")).click()
-        val emailLogin: Unit = driver.findElement(By.id("email")).sendKeys("mail@mail2.com")
-        val passwordLogin: Unit = driver.findElement(By.id("password")).sendKeys("Password@123")
-        val submitLogin = driver.findElement(By.id("submit")).click()
-    }
-
-    fun likeAnAlbum(){
-        val likeButton = driver.findElement(By.id("likeButton>Music")).click()
-    }
-
     fun driverShutDown(){
         driver.quit()
     }
