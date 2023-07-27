@@ -71,7 +71,9 @@ dependencies {
 test {
     useJUnitPlatform()
 
+
     systemProperty "webdriver.chrome.driver", "/Users/mmu4265/Desktop/driver/chromedriver"
+
 }
 
 compileKotlin {
