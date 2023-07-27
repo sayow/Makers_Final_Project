@@ -55,7 +55,6 @@ nav {
     background: var(--highlight-color);
     border-radius: 12px;
     border: none;
-    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
 }
 
 .nav-btn:hover,
@@ -127,8 +126,8 @@ h1{
     cursor: pointer;
     color: var(--light-text-color);
     font-size: 15px;
-    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
 }
+
 .friendsList .followedUsers button:hover{
     background: var(--btn-hover);
 }
@@ -437,8 +436,8 @@ h1{
     cursor: pointer;
     color: var(--light-text-color);
     font-size: 15px;
-    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
 }
+
 .foundUserCard .userNameAdEmail button:hover{
     background: var(--btn-hover);
 }
@@ -478,7 +477,6 @@ h1{
     font-size: 2.4rem;
     color: var(--light-text-color);
     border: none;
-    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
 }
 footer{
     position: relative;
