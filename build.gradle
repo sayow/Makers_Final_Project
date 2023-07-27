@@ -72,7 +72,7 @@ test {
     useJUnitPlatform()
 
 
-    systemProperty "webdriver.chrome.driver", "/Users/mmu4265/Desktop/driver/chromedriver"
+    systemProperty "webdriver.chrome.driver", "path_to_chromedriver"
 
 }
 

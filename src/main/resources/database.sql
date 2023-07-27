@@ -52,7 +52,7 @@ CREATE TABLE "public"."followers" (
 -- Insert random data into the "users" table
 INSERT INTO users (username, email, encrypted_password, profile_picture)
 VALUES
-    ('sayow', 'synr@example.com' ,'P@ssword123.','/static/cedric.png'),
+    ('sayonara', 'synr@example.com' ,'P@ssword123.','/static/sayonara.png'),
     ('mahmoud', 'mmd@example.com', 'P@ssword123.','/static/mahmoud.png'),
     ('paloma', 'plm@example.com' ,'P@ssword123.','/static/paloma.png'),
     ('tiago', 'tig@example.com', 'P@ssword123.','/static/tiago.png'),

@@ -59,13 +59,13 @@
                         </svg>
                     </button>
                 </form>
+                <br><br>
                 <h2>Users you follow</h2>
                 {{#each followedUsers}}
                     <a href="/{{id}}">
                         <div class="followedUsers">
                             <img class="profile_picture" src="{{profilePicture}}">
-                            <p class="username"> {{username}}</p>
-                            <p class="email">{{email}}</p>
+                            <p class="username"> @{{username}}</p>
                             <a id="unfollow-button" href="/follow/{{id}}"><button>Unfollow</button></a>
                         </div>
                     </a>
