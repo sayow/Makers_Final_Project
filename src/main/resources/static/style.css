@@ -12,9 +12,15 @@
     --light-text-color: #FFFFFF;
 
 }
+a{
+    color: var(--nav-bar-bg);
+    cursor: pointer;
+}
+
 .hidden{
     visibility: hidden;
 }
+
 
 body{
     background: var(--bg-pg-color);
@@ -49,6 +55,7 @@ nav {
     background: var(--highlight-color);
     border-radius: 12px;
     border: none;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
 }
 
 .nav-btn:hover,
@@ -71,6 +78,17 @@ h1{
     padding: 3.6rem 0;
 
 }
+.friendsList,
+#profileCard,
+#liked-albums,
+.container,
+.cardLogin,
+.cardSignUp,
+.album,
+.followedUsers
+{
+    box-shadow: 1px 4px 3px #aaaaaa;
+}
 
 .albums{
     max-width: 80vw;
@@ -90,10 +108,14 @@ h1{
     border-radius: 12px;
     padding: 1.6rem 1rem;
 }
+
 .followedUsers{
     width: 15rem;
     height: 22rem;
+    margin-bottom: 1rem;
 }
+
+
 
 .friendsList .followedUsers button{
     background: var(--highlight-color);
@@ -105,9 +127,16 @@ h1{
     cursor: pointer;
     color: var(--light-text-color);
     font-size: 15px;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
 }
 .friendsList .followedUsers button:hover{
     background: var(--btn-hover);
+}
+
+.friendsCards{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .album {
@@ -276,6 +305,8 @@ h1{
      gap: 2rem;
      background: var(--light-text-color);
      border-radius: 12px;
+     align-items: flex-start;
+     padding: 1rem 2rem;
  }
  .friendsList{
      grid-area: D;
@@ -406,6 +437,7 @@ h1{
     cursor: pointer;
     color: var(--light-text-color);
     font-size: 15px;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
 }
 .foundUserCard .userNameAdEmail button:hover{
     background: var(--btn-hover);
@@ -437,7 +469,7 @@ h1{
     border-radius: 12px;
     padding: 1rem;
     font-size: 1.4rem;
-    border: 1px solid var(--nav-bar-bg);
+    border: 1px solid #BDBDBD;
 }
 
 .cardSignUp #submitbutton,
@@ -445,6 +477,8 @@ h1{
     background: var(--highlight-color);
     font-size: 2.4rem;
     color: var(--light-text-color);
+    border: none;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.8), 1px -1px 0 rgba(0, 0, 0, 0.8), -1px 1px 0 rgba(0, 0, 0, 0.8), 1px 1px 0 rgba(0, 0, 0, 0.8);
 }
 footer{
     position: relative;

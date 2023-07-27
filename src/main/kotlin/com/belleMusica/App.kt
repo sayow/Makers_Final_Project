@@ -104,7 +104,7 @@ fun app(contexts: RequestContexts) = routes(
             unlikeAlbumOnProfile(contexts, request, id)
         }
     ),
-    "/likeOnSelectedProfile/{id}/{userId}" bind Method.GET to { request: Request ->
+    "/likeOnSelectedProfile/{id}&{userId}" bind Method.GET to { request: Request ->
         val idParamLens = Path.string().of("id")
         val id = idParamLens(request)
         val userIdParamLens = Path.string().of("userId")
